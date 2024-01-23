@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
         //Game specific only - remove if unnecessary
         //loseScreen.enabled = false;
         Time.timeScale = 1;
+        //
         #endregion
     }
 
@@ -109,11 +110,17 @@ public class Player : MonoBehaviour
             Heal(healAmount);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
+        {
+            Jump();
+        }
+
         //Test
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             TakeDamage(10);
         }
+        //
 
         //Bug fixes
         if (currentHealth < 0)

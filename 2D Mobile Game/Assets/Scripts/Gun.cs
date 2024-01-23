@@ -14,7 +14,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private bool automaticFire = true;
     [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0)] public int damageToDeal = 1;
-    [Min(0)] public int startingAmmo = 30;
+    [SerializeField] private bool infiniteAmmo = false;
+    [Min(0), SerializeField] private int startingAmmo = 30;
 
     [Header("Other")]
     [SerializeField] private AudioClip shootSFX;

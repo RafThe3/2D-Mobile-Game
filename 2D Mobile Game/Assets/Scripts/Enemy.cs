@@ -111,12 +111,12 @@ public class Enemy : MonoBehaviour
     private void MoveEnemy()
     {
         float moveMultiplier = 10 * moveSpeed;
-        Vector3 playerPosition = new(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-        playerPosition.Normalize();
-        Vector3 moveEnemy = playerPosition * moveMultiplier;
-        bool closeToPlayer = playerPosition.magnitude < 0;
+        Vector3 playerPosition = player.transform.position;
+        Vector3 playerPositionFromEnemy = playerPosition - transform.position;
+        playerPositionFromEnemy.Normalize();
+        Vector3 moveEnemy = playerPositionFromEnemy * moveMultiplier;
 
-        rb.velocity = !closeToPlayer ? moveEnemy : Vector2.zero;
+        rb.velocity = moveEnemy;
     }
     #endregion
 
@@ -161,6 +161,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && damageTimer >= damageDelay)
         {
             DealDamage(damageToDeal);
+            //rb.velocity = Vector2.zero;
         }
     }
 
