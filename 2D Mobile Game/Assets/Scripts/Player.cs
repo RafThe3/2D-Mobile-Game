@@ -72,13 +72,13 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
-        healthPacksText.text = $"= {healthPacks}";
+        //healthPacksText.text = $"= {healthPacks}";
         healthPacks = startingHealthPacks;
         healTimer = healDelay;
         audioSource = GetComponent<AudioSource>();
         //animator = GetComponent<Animator>();
         //Game specific only - remove if unnecessary
-        loseScreen.enabled = false;
+        //loseScreen.enabled = false;
         Time.timeScale = 1;
         #endregion
     }
@@ -109,6 +109,12 @@ public class Player : MonoBehaviour
             Heal(healAmount);
         }
 
+        //Test
+        if (Input.GetMouseButtonDown(0))
+        {
+            TakeDamage(10);
+        }
+
         //Bug fixes
         if (currentHealth < 0)
         {
@@ -121,7 +127,7 @@ public class Player : MonoBehaviour
         }
         //
 
-        healthPacksText.text = $"= {healthPacks}";
+        //healthPacksText.text = $"= {healthPacks}";
         healthBar.value = currentHealth;
         Debug.Log(healthPacks);
         #endregion
