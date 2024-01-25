@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [Header("Bullet")]
-    [SerializeField] private GameObject bulletPrefab;
-    [Min(0), SerializeField] private float bulletLifeTime = 1;
-    [Min(0), SerializeField] private float bulletSpeed = 1;
-
     [Header("Gun")]
+    [SerializeField] private bool canShoot = true;
     [SerializeField] private bool automaticFire = true;
     [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0), SerializeField] private int damageToDeal = 1;
     [SerializeField] private bool infiniteAmmo = true;
     [Min(0), SerializeField] private int startingAmmo = 30;
     [Min(0), SerializeField] private int numberOfRounds = 1;
+
+    [Header("Bullet")]
+    [SerializeField] private GameObject bulletPrefab;
+    [Min(0), SerializeField] private float bulletLifeTime = 1;
+    [Min(0), SerializeField] private float bulletSpeed = 1;
 
     [Header("Other")]
     [SerializeField] private AudioClip shootSFX;
@@ -37,22 +38,32 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
+        FixAmmoBugs();
+        UpdateText();
+
         shootTimer += Time.deltaTime;
 
-        bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
-        if (isShooting && shootTimer >= shootDelay)
+        if (canShoot)
         {
-            Shoot();
-        }
+            bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
+            if (isShooting && shootTimer >= shootDelay)
+            {
+                Shoot();
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reload();
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+            }
 
-        FixAmmoBugs();
+        }
+    }
+
+    private void UpdateText()
+    {
+        //Ammo
         ammoText.text = !infiniteAmmo ? $"Ammo: {currentAmmo} / {reserveAmmo}" : $"Ammo: {currentAmmo} / {Mathf.Infinity}";
-        Debug.Log(reserveAmmo);
+        ammoText.color = currentAmmo <= 10 ? Color.red : Color.white;
     }
 
     private void FixAmmoBugs()
@@ -75,7 +86,6 @@ public class Gun : MonoBehaviour
             if (currentAmmo < startingAmmo)
             {
                 currentAmmo = startingAmmo;
-                Camera.main.GetComponent<AudioSource>().PlayOneShot(reloadSFX);
             }
         }
         else
@@ -86,6 +96,7 @@ public class Gun : MonoBehaviour
                 currentAmmo = startingAmmo;
             }
         }
+        Camera.main.GetComponent<AudioSource>().PlayOneShot(reloadSFX);
     }
 
     public void Shoot()

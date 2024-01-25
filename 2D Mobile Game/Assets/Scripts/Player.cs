@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip healSFX, healPickupSFX;
     [SerializeField] private Canvas loseScreen;
 
-
     //Internal Variables
     private int healthPacks;
     private int currentHealth;
@@ -75,7 +74,7 @@ public class Player : MonoBehaviour
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
         healTimer = healDelay;
-        audioSource = GetComponent<AudioSource>();
+        audioSource = Camera.main.GetComponent<AudioSource>();
         //animator = GetComponent<Animator>();
         //Game specific only - remove if unnecessary
         //loseScreen.enabled = false;
@@ -122,25 +121,11 @@ public class Player : MonoBehaviour
         //
 
         FixHealthBugs();
-        healthPacksText.text = $"Health Packs: {healthPacks}";
-        healthBar.value = currentHealth;
+        UpdateUI();
         Debug.Log(healthPacks);
         #endregion
     }
-
-    private void FixHealthBugs()
-    {
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
-
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-    }
-
+    
     #region Methods
 
     #region Movement and Controls
@@ -183,6 +168,18 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Health
+    private void FixHealthBugs()
+    {
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
 
     public void TakeDamage(int health)
     {
@@ -217,6 +214,18 @@ public class Player : MonoBehaviour
     {
         healthPacks++;
         audioSource.PlayOneShot(healPickupSFX);
+    }
+
+    #endregion
+
+    #region Other
+    private void UpdateUI()
+    {
+        healthPacksText.text = $"Health Packs: {healthPacks}";
+        healthPacksText.color = healthPacks <= 0 ? Color.red : Color.white;
+        healthBar.value = currentHealth;
+        Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
+        healthBarFillArea.color = currentHealth <= 25 ? Color.red : Color.green;
     }
 
     #endregion

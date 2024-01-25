@@ -10,8 +10,8 @@ public class Enemy : MonoBehaviour
 
     #region Movement
     [Header("Movement")]
-    [Min(0), SerializeField] private float moveSpeed = 1;
     [SerializeField] private bool canMove = true;
+    [Min(0), SerializeField] private float moveSpeed = 1;
     #endregion
 
     #region Health
@@ -97,13 +97,6 @@ public class Enemy : MonoBehaviour
         #endregion
     }
 
-    private void FixHealthBugs()
-    {
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
-    }
 
     #region Methods
 
@@ -123,9 +116,6 @@ public class Enemy : MonoBehaviour
     #region Health
     private void DisplayHealth()
     {
-        //Vector3 enemyFacing = gameObject.transform.localScale.x < 0 ? new(-textScale.x, textScale.y, textScale.z) : textScale;
-        //healthBar.transform.localScale = enemyFacing;
-
         if (currentHealth < maxHealth)
         {
             healthBar.gameObject.SetActive(true);
@@ -163,7 +153,13 @@ public class Enemy : MonoBehaviour
             DealDamage(damageToDeal);
         }
     }
-
+    private void FixHealthBugs()
+    {
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+    }
     #endregion
 
     #endregion
