@@ -161,7 +161,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && damageTimer >= damageDelay)
         {
             DealDamage(damageToDeal);
-            //rb.velocity = Vector2.zero;
         }
     }
 

@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
-        //healthPacksText.text = $"= {healthPacks}";
+        healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
         healTimer = healDelay;
         audioSource = GetComponent<AudioSource>();
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         //
 
         FixHealthBugs();
-        //healthPacksText.text = $"= {healthPacks}";
+        healthPacksText.text = $"Health Packs: {healthPacks}";
         healthBar.value = currentHealth;
         Debug.Log(healthPacks);
         #endregion

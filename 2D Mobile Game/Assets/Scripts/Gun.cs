@@ -25,8 +25,7 @@ public class Gun : MonoBehaviour
 
     //Internal Variables
     private float shootTimer;
-    private int currentAmmo;
-    private int reserveAmmo;
+    private int currentAmmo, reserveAmmo;
 
     private void Start()
     {
@@ -52,7 +51,7 @@ public class Gun : MonoBehaviour
         }
 
         FixAmmoBugs();
-        //ammoText.text = $"Ammo: {currentAmmo} / {reserveAmmo}";
+        ammoText.text = !infiniteAmmo ? $"Ammo: {currentAmmo} / {reserveAmmo}" : $"Ammo: {currentAmmo} / {Mathf.Infinity}";
         Debug.Log(reserveAmmo);
     }
 
