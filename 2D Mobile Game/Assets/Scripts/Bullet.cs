@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private Gun gun;
     [HideInInspector] public int damage;
-
-    private void Awake()
-    {
-        gun = FindObjectOfType<Gun>();
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

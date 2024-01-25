@@ -17,12 +17,10 @@ public class Enemy : MonoBehaviour
     #region Health
     [Header("Health")]
     [Min(0) ,SerializeField] private int maxHealth = 100;
-    [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [SerializeField] private Slider healthBar;
 
     //Internal Variables
     private int currentHealth = 0;
-    private Vector3 textScale;
     #endregion
 
     #region Damage
@@ -53,7 +51,6 @@ public class Enemy : MonoBehaviour
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
         healthBar.gameObject.SetActive(false);
-        textScale = healthText.transform.localScale;
         #endregion
 
         #region Damage
@@ -92,17 +89,20 @@ public class Enemy : MonoBehaviour
             Die();
         }
 
-        //Bug fixes
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
-
+        FixHealthBugs();
         #endregion
 
         #region Damage
         damageTimer += Time.deltaTime;
         #endregion
+    }
+
+    private void FixHealthBugs()
+    {
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
     }
 
     #region Methods

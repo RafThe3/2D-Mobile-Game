@@ -51,8 +51,22 @@ public class Gun : MonoBehaviour
             Reload();
         }
 
-        ammoText.text = $"Ammo: {currentAmmo} / {reserveAmmo}";
+        FixAmmoBugs();
+        //ammoText.text = $"Ammo: {currentAmmo} / {reserveAmmo}";
         Debug.Log(reserveAmmo);
+    }
+
+    private void FixAmmoBugs()
+    {
+        if (currentAmmo < 0)
+        {
+            currentAmmo = 0;
+        }
+
+        if (reserveAmmo < 0)
+        {
+            reserveAmmo = 0;
+        }
     }
 
     public void Reload()

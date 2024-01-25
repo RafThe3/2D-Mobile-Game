@@ -121,7 +121,15 @@ public class Player : MonoBehaviour
         }
         //
 
-        //Bug fixes
+        FixHealthBugs();
+        //healthPacksText.text = $"= {healthPacks}";
+        healthBar.value = currentHealth;
+        Debug.Log(healthPacks);
+        #endregion
+    }
+
+    private void FixHealthBugs()
+    {
         if (currentHealth < 0)
         {
             currentHealth = 0;
@@ -131,18 +139,12 @@ public class Player : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        //
-
-        //healthPacksText.text = $"= {healthPacks}";
-        healthBar.value = currentHealth;
-        Debug.Log(healthPacks);
-        #endregion
     }
 
     #region Methods
 
     #region Movement and Controls
-    
+
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 10;
