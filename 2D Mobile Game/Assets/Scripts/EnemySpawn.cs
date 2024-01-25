@@ -11,6 +11,7 @@ public class EnemySpawn : MonoBehaviour
 
     //Game specific only - remove if unnecessary
     private EnemyCounter enemyCounter;
+    //
 
     //Internal Variables
     private float timer;
@@ -21,6 +22,7 @@ public class EnemySpawn : MonoBehaviour
         //Game specific only - remove if unnecessary
         enemyCounter = FindObjectOfType<EnemyCounter>();
         enemyCounter.enemiesToElim = numberOfEnemies;
+        //
     }
 
     private void Update()

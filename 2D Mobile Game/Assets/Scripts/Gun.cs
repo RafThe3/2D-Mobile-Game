@@ -13,9 +13,10 @@ public class Gun : MonoBehaviour
     [Header("Gun")]
     [SerializeField] private bool automaticFire = true;
     [Min(0), SerializeField] private float shootDelay = 1;
-    [Min(0)] public int damageToDeal = 1;
-    [SerializeField] private bool infiniteAmmo = false;
+    [Min(0), SerializeField] private int damageToDeal = 1;
+    [SerializeField] private bool infiniteAmmo = true;
     [Min(0), SerializeField] private int startingAmmo = 30;
+    [Min(0), SerializeField] private int numberOfRounds = 1;
 
     [Header("Other")]
     [SerializeField] private AudioClip shootSFX;
@@ -25,18 +26,22 @@ public class Gun : MonoBehaviour
     //Internal Variables
     private float shootTimer;
     private int currentAmmo;
+    private int reserveAmmo;
 
     private void Start()
     {
         shootTimer = shootDelay;
         currentAmmo = startingAmmo;
+        reserveAmmo = (startingAmmo * numberOfRounds) - startingAmmo;
+        bulletPrefab.GetComponent<Bullet>().damage = damageToDeal;
     }
 
     private void Update()
     {
         shootTimer += Time.deltaTime;
 
-        if ((Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire) && shootTimer >= shootDelay)
+        bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
+        if (isShooting && shootTimer >= shootDelay)
         {
             Shoot();
         }
@@ -46,19 +51,31 @@ public class Gun : MonoBehaviour
             Reload();
         }
 
-        ammoText.text = $"= {currentAmmo}";
+        ammoText.text = $"Ammo: {currentAmmo} / {reserveAmmo}";
+        Debug.Log(reserveAmmo);
     }
 
     public void Reload()
     {
-        if (currentAmmo <= 0)
+        if (infiniteAmmo)
         {
-            currentAmmo = startingAmmo;
-            Camera.main.GetComponent<AudioSource>().PlayOneShot(reloadSFX);
+            if (currentAmmo < startingAmmo)
+            {
+                currentAmmo = startingAmmo;
+                Camera.main.GetComponent<AudioSource>().PlayOneShot(reloadSFX);
+            }
+        }
+        else
+        {
+            if (currentAmmo < startingAmmo && reserveAmmo > 0)
+            {
+                reserveAmmo -= startingAmmo - currentAmmo;
+                currentAmmo = startingAmmo;
+            }
         }
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         if (currentAmmo > 0)
         {

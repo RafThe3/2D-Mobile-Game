@@ -95,6 +95,10 @@ public class Player : MonoBehaviour
             MovePlayer(move);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
+        {
+            Jump();
+        }
         #endregion
 
         #region Health
@@ -108,11 +112,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && healTimer >= healDelay && healthPacks > 0)
         {
             Heal(healAmount);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
-        {
-            Jump();
         }
 
         //Test
@@ -143,7 +142,7 @@ public class Player : MonoBehaviour
     #region Methods
 
     #region Movement and Controls
-
+    
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 10;
@@ -151,7 +150,7 @@ public class Player : MonoBehaviour
 
         rb.velocity = movePlayer;
     }
-
+    
     private Vector2 DetermineControls()
     {
         Vector2 move = Vector2.zero;
@@ -206,8 +205,10 @@ public class Player : MonoBehaviour
     private void Die()
     {
         canMove = false;
+        //Game specific only - remove if unnecessary
         loseScreen.enabled = true;
         Time.timeScale = 0;
+        //
     }
 
     public void CollectHealthPack()

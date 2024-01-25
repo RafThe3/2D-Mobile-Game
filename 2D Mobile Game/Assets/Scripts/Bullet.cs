@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Gun gun;
+    [HideInInspector] public int damage;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class Bullet : MonoBehaviour
     private void DamageEnemy(Collider2D collision)
     {
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-        enemy.TakeDamage(gun.damageToDeal);
+        enemy.TakeDamage(damage);
         Destroy(gameObject);
     }
 }
