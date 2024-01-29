@@ -989,9 +989,9 @@ MonoBehaviour:
   automaticFire: 1
   shootDelay: 0.1
   damageToDeal: 10
-  infiniteAmmo: 0
+  infiniteAmmo: 1
   startingAmmo: 30
-  numberOfRounds: 2
+  startingRounds: 2
   bulletPrefab: {fileID: 8083596436272375505, guid: 924e6ee6558471e46a2e50b9e12888e8, type: 3}
   bulletLifeTime: 1.5
   bulletSpeed: 3
