@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
             Die();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && healTimer >= healDelay && healthPacks > 0)
+        if (Input.GetKeyDown(KeyCode.E)) /*&& healTimer >= healDelay && healthPacks > 0*/
         {
             Heal(healAmount);
         }
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
 
     public void Heal(int health)
     {
-        if (currentHealth < maxHealth && healTimer >= healDelay && healthPacks > 0)
+        if (currentHealth < maxHealth && healthPacks > 0) /*&& healTimer >= healDelay*/
         {
             currentHealth += health;
             healthPacks--;

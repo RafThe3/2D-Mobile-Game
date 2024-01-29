@@ -27,13 +27,14 @@ public class Gun : MonoBehaviour
 
     //Internal Variables
     private float shootTimer;
-    private int currentAmmo, reserveAmmo;
+    private int currentAmmo, reserveAmmo, maxAmmo;
 
     private void Start()
     {
         shootTimer = shootDelay;
         currentAmmo = startingAmmo;
         reserveAmmo = (startingAmmo * startingRounds) - startingAmmo;
+        maxAmmo = reserveAmmo;
         bulletPrefab.GetComponent<Bullet>().damage = damageToDeal;
     }
 
@@ -149,6 +150,21 @@ public class Gun : MonoBehaviour
             Destroy(bullet, bulletLifeTime);
             currentAmmo--;
             shootTimer = 0;
+        }
+    }
+
+    public void AddAmmo(int ammo)
+    {
+        if (reserveAmmo < maxAmmo)
+        {
+            return;
+        }
+
+        reserveAmmo += ammo;
+
+        if (reserveAmmo > maxAmmo)
+        {
+            reserveAmmo = maxAmmo;
         }
     }
 }
