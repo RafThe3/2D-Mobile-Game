@@ -1136,9 +1136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canShoot: 1
   automaticFire: 1
+  infiniteAmmo: 0
   shootDelay: 0.1
   damageToDeal: 10
-  infiniteAmmo: 0
   startingAmmo: 30
   startingRounds: 2
   bulletPrefab: {fileID: 8083596436272375505, guid: 924e6ee6558471e46a2e50b9e12888e8, type: 3}

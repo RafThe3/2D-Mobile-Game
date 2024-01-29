@@ -8,9 +8,9 @@ public class Gun : MonoBehaviour
     [Header("Gun")]
     [SerializeField] private bool canShoot = true;
     [SerializeField] private bool automaticFire = true;
+    [SerializeField] private bool infiniteAmmo = true;
     [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0), SerializeField] private int damageToDeal = 1;
-    [SerializeField] private bool infiniteAmmo = true;
     [Min(0), SerializeField] private int startingAmmo = 30;
     [Min(0), SerializeField] private int startingRounds = 1;
 
