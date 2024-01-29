@@ -186,8 +186,6 @@ public class Player : MonoBehaviour
         if (currentHealth > 0)
         {
             currentHealth -= health;
-            Image hurtImage = GameObject.Find("Hurt Image").GetComponent<Image>();
-            hurtImage.CrossFadeAlpha(hurtImage.color.a, 0.3f, false);
         }
     }
 
