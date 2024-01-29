@@ -8,6 +8,7 @@ public class MainMenuScript : MonoBehaviour
     public int difficulty;
     public void ExitGame()
     {
+        Debug.Log("Quitting Game");
         Application.Quit();
     }
     public void PlayGame()
