@@ -5,6 +5,9 @@ using UnityEngine;
 public class HealthPack : MonoBehaviour
 {
     private Player player;
+    public bool isHealth = true;
+    public bool isAmmo = false;
+    public int ammoGiven = 30;
 
     private void Awake()
     {
@@ -15,7 +18,14 @@ public class HealthPack : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            player.CollectHealthPack();
+            if(isHealth)
+            {
+                player.CollectHealthPack();
+            }
+            else if (isAmmo)
+            {
+                player.CollectAmmoPack(ammoGiven);
+            }
             Destroy(gameObject);
         }
     }
