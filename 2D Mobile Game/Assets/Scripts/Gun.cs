@@ -27,7 +27,7 @@ public class Gun : MonoBehaviour
 
     //Internal Variables
     private float shootTimer;
-    private int currentAmmo, reserveAmmo, maxAmmo;
+    public int currentAmmo, reserveAmmo, maxAmmo;
 
     private void Start()
     {

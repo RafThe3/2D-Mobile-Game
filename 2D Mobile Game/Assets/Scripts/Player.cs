@@ -227,6 +227,11 @@ public class Player : MonoBehaviour
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
         healthBarFillArea.color = currentHealth <= 25 ? Color.red : Color.green;
     }
+    public void CollectAmmoPack(int ammoCount)
+    {
+        GetComponent<Gun>().reserveAmmo += ammoCount;
+        audioSource.PlayOneShot(healPickupSFX);
+    }
 
     #endregion
 
