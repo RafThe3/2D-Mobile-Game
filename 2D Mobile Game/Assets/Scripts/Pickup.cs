@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPack : MonoBehaviour
+public class Pickup : MonoBehaviour
 {
     private Player player;
-    public bool isHealth = true;
-    public bool isAmmo = false;
-    public int ammoGiven = 30;
+    private Gun gun;
+    [SerializeField] private bool isHealth = true, isAmmo = false;
+    [SerializeField] private int ammoToGive = 30;
 
     private void Awake()
     {
         player = FindObjectOfType<Player>();
+        gun = FindObjectOfType<Gun>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -20,11 +21,11 @@ public class HealthPack : MonoBehaviour
         {
             if(isHealth)
             {
-                player.CollectHealthPack();
+                player.AddHealthPack();
             }
             else if (isAmmo)
             {
-                player.CollectAmmoPack(ammoGiven);
+                gun.AddAmmo(ammoToGive);
             }
             Destroy(gameObject);
         }
