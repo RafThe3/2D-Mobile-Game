@@ -7,16 +7,11 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    #region Variables
-
-    #region Movement
     [Header("Movement")]
-    public bool canMove = true;
+    [SerializeField] private bool canMove = true;
     [Min(0), SerializeField] private float moveSpeed = 1;
     [Min(0), SerializeField] private float jumpForce = 1;
-    #endregion
-
-    #region Health
+    
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
     [Min(0), SerializeField] private int healAmount = 1;
@@ -27,65 +22,64 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip healSFX, healPickupSFX, hurtSFX;
     [SerializeField] private Canvas loseScreen;
 
-    //Internal Variables
-    private int healthPacks;
-    private int currentHealth;
-    private AudioSource audioSource;
-    private float healTimer;
-    #endregion
-
-    #region Controls
     [Header("Controls")]
     [Tooltip("Allows the game to be played with keyboard if set to true.")] public bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
-    #endregion
+    
+    //Internal Variables
 
-    #region Other
+    //Health
+    private int healthPacks;
+    private int currentHealth;
+    private AudioSource audioSource;
+    private float healTimer;
+    //
+
+    //Other
     //private Animator animator;
     private Collider2D cldr;
     private Rigidbody2D rb;
     private bool allowGravity = false;
-    #endregion
+    //
 
-    #endregion
+    //
 
     private void Awake()
     {
-        #region Other
         rb = GetComponent<Rigidbody2D>();
         cldr = GetComponent<Collider2D>();
-        audioSource = GetComponent<AudioSource>();
-        #endregion
+        audioSource = Camera.main.GetComponent<AudioSource>();
     }
 
     private void Start()
     {
-        #region Movement and Controls
+        //Controls
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
-        #endregion
+        //
 
-        #region Health
+        //Health
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
         healTimer = healDelay;
+        //
+
+        //Other
         audioSource = Camera.main.GetComponent<AudioSource>();
         //animator = GetComponent<Animator>();
-        //Game specific only - remove if unnecessary
         //loseScreen.enabled = false;
         Time.timeScale = 1;
         //
-        #endregion
     }
 
     private void Update()
     {
-        #region Movement and Controls
+        healTimer += Time.deltaTime;
 
         if (canMove)
         {
@@ -98,10 +92,6 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
-        #endregion
-
-        #region Health
-        healTimer += Time.deltaTime;
 
         if (currentHealth <= 0)
         {
@@ -122,13 +112,10 @@ public class Player : MonoBehaviour
 
         FixHealthBugs();
         UpdateUI();
-        #endregion
+        
     }
-    
-    #region Methods
 
-    #region Movement and Controls
-
+    //Movement and Controls
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 10;
@@ -163,11 +150,9 @@ public class Player : MonoBehaviour
             rb.AddForce(playerJump);
         }
     }
+    //
 
-    #endregion
-
-    #region Health
-
+    //Health
     private void FixHealthBugs()
     {
         if (currentHealth < 0)
@@ -216,21 +201,16 @@ public class Player : MonoBehaviour
         healthPacks++;
         audioSource.PlayOneShot(healPickupSFX);
     }
+    //
 
-    #endregion
-
-    #region Other
-
+    //Other
     private void UpdateUI()
     {
         healthPacksText.text = $"Health Packs: {healthPacks}";
-        healthPacksText.color = healthPacks <= 0 ? Color.red : Color.white;
+        healthPacksText.color = healthPacks > 0 ? Color.white : Color.red;
         healthBar.value = currentHealth;
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
-        healthBarFillArea.color = currentHealth <= 25 ? Color.red : Color.green;
+        healthBarFillArea.color = currentHealth > 25 ? Color.green : Color.red;
     }
-
-    #endregion
-
-    #endregion
+    //
 }
