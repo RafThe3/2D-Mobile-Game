@@ -122,7 +122,6 @@ public class Player : MonoBehaviour
 
         FixHealthBugs();
         UpdateUI();
-        Debug.Log(healthPacks);
         #endregion
     }
     
@@ -168,6 +167,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Health
+
     private void FixHealthBugs()
     {
         if (currentHealth < 0)
@@ -219,6 +219,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other
+
     private void UpdateUI()
     {
         healthPacksText.text = $"Health Packs: {healthPacks}";

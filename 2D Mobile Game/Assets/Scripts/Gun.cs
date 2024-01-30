@@ -12,6 +12,7 @@ public class Gun : MonoBehaviour
     [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0), SerializeField] private int damageToDeal = 1;
     [Min(0), SerializeField] private int startingAmmo = 30;
+    [Min(0), SerializeField] private int maxAmmo = 30;
     [Min(0), SerializeField] private int startingRounds = 1;
 
     [Header("Bullet")]
@@ -27,15 +28,24 @@ public class Gun : MonoBehaviour
 
     //Internal Variables
     private float shootTimer;
-    private int currentAmmo, reserveAmmo, maxAmmo;
+    private int currentAmmo, reserveAmmo;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        bulletPrefab.GetComponent<Bullet>().damage = damageToDeal;
+        audioSource = Camera.main.GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
         shootTimer = shootDelay;
         currentAmmo = startingAmmo;
         reserveAmmo = (startingAmmo * startingRounds) - startingAmmo;
-        maxAmmo = reserveAmmo;
-        bulletPrefab.GetComponent<Bullet>().damage = damageToDeal;
+        if (maxAmmo == 0)
+        {
+            maxAmmo = reserveAmmo;
+        }
     }
 
     private void Update()
@@ -89,10 +99,20 @@ public class Gun : MonoBehaviour
         {
             reserveAmmo = 0;
         }
+
+        if (reserveAmmo > maxAmmo)
+        {
+            reserveAmmo = maxAmmo;
+        }
     }
 
     public void Reload()
     {
+        if (((!infiniteAmmo && reserveAmmo > 0) || infiniteAmmo) && currentAmmo < startingAmmo)
+        {
+            audioSource.PlayOneShot(reloadSFX);
+        }
+
         if (infiniteAmmo)
         {
             if (currentAmmo < startingAmmo)
@@ -110,7 +130,6 @@ public class Gun : MonoBehaviour
                 reserveAmmo -= reloadAmount;
             }
         }
-        Camera.main.GetComponent<AudioSource>().PlayOneShot(reloadSFX);
     }
 
     public void Shoot()
@@ -125,7 +144,7 @@ public class Gun : MonoBehaviour
             shootDir.Normalize();
             float moveMultiplier = 10 * bulletSpeed;
             bullet.GetComponent<Rigidbody2D>().velocity = moveMultiplier * shootDir;
-            Camera.main.GetComponent<AudioSource>().PlayOneShot(shootSFX);
+            audioSource.PlayOneShot(shootSFX);
             Destroy(bullet, bulletLifeTime);
             currentAmmo--;
             shootTimer = 0;
@@ -146,7 +165,7 @@ public class Gun : MonoBehaviour
             shootDir.Normalize();
             float moveMultiplier = 10 * bulletSpeed;
             bullet.GetComponent<Rigidbody2D>().velocity = moveMultiplier * shootDir;
-            Camera.main.GetComponent<AudioSource>().PlayOneShot(shootSFX);
+            audioSource.PlayOneShot(shootSFX);
             Destroy(bullet, bulletLifeTime);
             currentAmmo--;
             shootTimer = 0;
@@ -161,10 +180,5 @@ public class Gun : MonoBehaviour
         }
 
         reserveAmmo += ammo;
-
-        if (reserveAmmo > maxAmmo)
-        {
-            reserveAmmo = maxAmmo;
-        }
     }
 }
