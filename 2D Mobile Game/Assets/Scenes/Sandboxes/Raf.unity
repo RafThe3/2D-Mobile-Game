@@ -1215,9 +1215,9 @@ MonoBehaviour:
   healthPacksText: {fileID: 679446564}
   healSFX: {fileID: 8300000, guid: fc582df3572b64d279888946675505af, type: 3}
   healPickupSFX: {fileID: 0}
-  hurtSFX: {fileID: 8300000, guid: 1b766da7cc2d648aa84e36cb5fe8abcb, type: 3}
+  hurtSFX: {fileID: 8300000, guid: 05d0536a3eefc80438f95f9662331f52, type: 3}
   loseScreen: {fileID: 0}
-  allowKeyControls: 0
+  allowKeyControls: 1
   joystick: {fileID: 586792801}
   mobileControls: {fileID: 1263939160}
 --- !u!114 &868743774
