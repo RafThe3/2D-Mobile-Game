@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float healDelay = 1;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthPacksText;
-    [SerializeField] private AudioClip healSFX, healPickupSFX;
+    [SerializeField] private AudioClip healSFX, healPickupSFX, hurtSFX;
     [SerializeField] private Canvas loseScreen;
 
     //Internal Variables
@@ -186,6 +186,7 @@ public class Player : MonoBehaviour
         if (currentHealth > 0)
         {
             currentHealth -= health;
+            audioSource.PlayOneShot(hurtSFX);
         }
     }
 

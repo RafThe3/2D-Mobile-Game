@@ -1213,8 +1213,9 @@ MonoBehaviour:
   healDelay: 2
   healthBar: {fileID: 1846415097}
   healthPacksText: {fileID: 679446564}
-  healSFX: {fileID: 0}
+  healSFX: {fileID: 8300000, guid: fc582df3572b64d279888946675505af, type: 3}
   healPickupSFX: {fileID: 0}
+  hurtSFX: {fileID: 8300000, guid: 1b766da7cc2d648aa84e36cb5fe8abcb, type: 3}
   loseScreen: {fileID: 0}
   allowKeyControls: 0
   joystick: {fileID: 586792801}
@@ -2698,6 +2699,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511ef7ed8d519e6478525ee95cdc4a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHealth: 1
+  isAmmo: 0
+  ammoToGive: 30
 --- !u!61 &1972144199
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3299,7 +3303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8775187176481455025, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
