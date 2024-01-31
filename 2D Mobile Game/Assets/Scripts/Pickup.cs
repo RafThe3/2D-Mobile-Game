@@ -7,7 +7,7 @@ public class Pickup : MonoBehaviour
     private Player player;
     private Gun gun;
     [SerializeField] private bool isHealth = true, isAmmo = false;
-    [SerializeField] private int ammoToGive = 30;
+    [Min(0), SerializeField] private int ammoToGive = 30;
 
     private void Awake()
     {

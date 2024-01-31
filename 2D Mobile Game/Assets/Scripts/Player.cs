@@ -4,13 +4,18 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canDash = true;
     [Min(0), SerializeField] private float moveSpeed = 1;
     [Min(0), SerializeField] private float jumpForce = 1;
+    [Min(0), SerializeField] private float dashForce = 1;
+    [Min(0), SerializeField] private float dashCooldown = 1;
+    [Min(0), SerializeField] private float dashTime = 0.1f;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
@@ -26,8 +31,11 @@ public class Player : MonoBehaviour
     [Tooltip("Allows the game to be played with keyboard if set to true.")] public bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
-    
+
     //Internal Variables
+
+    //Movement
+    private bool isDashing = false;
 
     //Health
     private int healthPacks;
@@ -79,6 +87,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         healTimer += Time.deltaTime;
 
         if (canMove)
@@ -86,11 +99,16 @@ public class Player : MonoBehaviour
             //Sets the move variable depending on the controls
             Vector2 move = DetermineControls();
             MovePlayer(move);
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
-        {
-            Jump();
+            if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+            {
+                StartCoroutine(Dash());
+            }
         }
 
         if (currentHealth <= 0)
@@ -119,11 +137,22 @@ public class Player : MonoBehaviour
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 10;
-        Vector3 movePlayer = new(x: move.x * moveMultiplier, y: !allowGravity ? move.y * moveMultiplier : rb.velocity.y);
+        Vector3 movePlayer = new(x: move.x, y: !allowGravity ? move.y : rb.velocity.y);
 
-        rb.velocity = movePlayer;
+        rb.velocity = moveMultiplier * movePlayer;
+        FlipPlayer();
     }
-    
+
+    private void FlipPlayer()
+    {
+        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
+
+        if (isMoving)
+        {
+            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1);
+        }
+    }
+
     private Vector2 DetermineControls()
     {
         Vector2 move = Vector2.zero;
@@ -149,6 +178,24 @@ public class Player : MonoBehaviour
             Vector2 playerJump = new(0, jumpForce * 100);
             rb.AddForce(playerJump);
         }
+    }
+
+    public void ButtonDash()
+    {
+        StartCoroutine(Dash());
+    }
+
+    public IEnumerator Dash()
+    {
+        Vector2 move = DetermineControls();
+        canDash = false;
+        isDashing = true;
+        float dashMultiplier = dashForce * 10;
+        rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
     //
 
