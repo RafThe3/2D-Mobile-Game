@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
     [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0), SerializeField] private int damageToDeal = 1;
     [Min(0), SerializeField] private int startingAmmo = 30;
-    [Min(0), SerializeField] private int maxAmmo = 30;
+    [Min(0), SerializeField] private int maxAmmo = 150;
     [Min(0), SerializeField] private int startingRounds = 1;
 
     [Header("Bullet")]
@@ -174,7 +174,7 @@ public class Gun : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        if (reserveAmmo < maxAmmo)
+        if (reserveAmmo >= maxAmmo)
         {
             return;
         }
