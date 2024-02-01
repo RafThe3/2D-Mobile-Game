@@ -663,7 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 1
-  difficultyText: {fileID: 0}
+  difficultyText: {fileID: 1658763650}
 --- !u!1 &847469270
 GameObject:
   m_ObjectHideFlags: 0

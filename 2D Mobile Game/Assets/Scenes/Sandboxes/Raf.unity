@@ -1608,7 +1608,7 @@ MonoBehaviour:
   healPickupSFX: {fileID: 0}
   hurtSFX: {fileID: 8300000, guid: 05d0536a3eefc80438f95f9662331f52, type: 3}
   loseScreen: {fileID: 0}
-  allowKeyControls: 0
+  allowKeyControls: 1
   joystick: {fileID: 586792801}
   mobileControls: {fileID: 1263939160}
 --- !u!114 &868743774
