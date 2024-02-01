@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuScript : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private int difficulty;
     [SerializeField] private TMPro.TextMeshProUGUI difficultyText;

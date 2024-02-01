@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Rigidbody2D rb;
     private AudioSource audioSource;
+    private Vector3 healthBarScale;
     //Game specific only - remove if unnecessary
     //private EnemyCounter enemyCounter;
     //
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour
         healthBar.value = healthBar.maxValue;
         healthBar.gameObject.SetActive(false);
         damageTimer = damageDelay;
+        healthBarScale = healthBar.transform.localScale;
     }
 
     private void Awake()
@@ -79,12 +81,26 @@ public class Enemy : MonoBehaviour
         Vector3 moveEnemy = playerPositionFromEnemy * moveMultiplier;
 
         rb.velocity = moveEnemy;
+        FlipSprite();
+    }
+
+    private void FlipSprite()
+    {
+        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
+
+        if (isMoving)
+        {
+            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1);
+        }
     }
     //
 
     //Health and Damage
     private void DisplayHealth()
     {
+        Vector3 originalScale = gameObject.transform.localScale.x < 0 ? new(-healthBarScale.x, healthBarScale.y, healthBarScale.z) : healthBarScale;
+        healthBar.transform.localScale = originalScale;
+
         if (currentHealth < maxHealth)
         {
             healthBar.gameObject.SetActive(true);

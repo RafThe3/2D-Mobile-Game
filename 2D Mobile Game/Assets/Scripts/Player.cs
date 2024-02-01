@@ -141,10 +141,10 @@ public class Player : MonoBehaviour
         Vector3 movePlayer = new(x: move.x, y: !allowGravity ? move.y : rb.velocity.y);
 
         rb.velocity = moveMultiplier * movePlayer;
-        FlipPlayer();
+        FlipSprite();
     }
 
-    private void FlipPlayer()
+    private void FlipSprite()
     {
         bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
 
