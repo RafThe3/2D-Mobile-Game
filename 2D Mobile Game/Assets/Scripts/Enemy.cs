@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     
     [Header("Health")]
     [Min(0) ,SerializeField] private int maxHealth = 100;
-    [SerializeField] private Slider healthBar;
 
     [Header("Damage")]
     [Min(0) ,SerializeField] private int damageToDeal = 1;
@@ -24,11 +23,12 @@ public class Enemy : MonoBehaviour
     //Internal Variables
     private int currentHealth = 0;
     private float damageTimer;
+    private Slider healthBar;
     private GameObject player;
     private Rigidbody2D rb;
     private AudioSource audioSource;
     //Game specific only - remove if unnecessary
-    private EnemyCounter enemyCounter;
+    //private EnemyCounter enemyCounter;
     //
 
     private void Start()
@@ -42,10 +42,11 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        enemyCounter = FindObjectOfType<EnemyCounter>();
+        //enemyCounter = FindObjectOfType<EnemyCounter>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         audioSource = Camera.main.GetComponent<AudioSource>();
+        healthBar = GetComponentInChildren<Slider>();
     }
 
     private void Update()

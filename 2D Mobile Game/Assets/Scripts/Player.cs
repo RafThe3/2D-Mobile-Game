@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float dashForce = 1;
     [Min(0), SerializeField] private float dashCooldown = 1;
     [Min(0), SerializeField] private float dashTime = 0.1f;
+    [SerializeField] private AudioClip dashSFX;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
@@ -191,6 +192,7 @@ public class Player : MonoBehaviour
         canDash = false;
         isDashing = true;
         float dashMultiplier = dashForce * 10;
+        audioSource.PlayOneShot(dashSFX);
         rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
         yield return new WaitForSeconds(dashTime);
         isDashing = false;

@@ -147,13 +147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d6aede96e1d7842a76570234a6edf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
   canMove: 1
+  moveSpeed: 0.7
   maxHealth: 100
-  healthBar: {fileID: 0}
-  damageToDeal: 1
-  damageDelay: 1
-  attackSFX: {fileID: 0}
+  damageToDeal: 7
+  damageDelay: 2
+  hurtSFX: {fileID: 0}
 --- !u!1 &3057828453310320559
 GameObject:
   m_ObjectHideFlags: 0
