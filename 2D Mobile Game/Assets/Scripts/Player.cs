@@ -197,6 +197,14 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
+    public IEnumerator SpeedBoost(float speedMultiplier, float duration)
+    {
+        float tempMoveSpeed = moveSpeed;
+        moveSpeed *= speedMultiplier;
+        yield return new WaitForSeconds(duration);
+        moveSpeed = tempMoveSpeed;
+    }
     //
 
     //Health

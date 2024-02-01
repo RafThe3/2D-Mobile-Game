@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
 
         //Game specific only - remove if unnecessary
-        enemyCounter.enemiesRemaining--;
+        //enemyCounter.enemiesRemaining--;
     }
 
     private void OnCollisionStay2D(Collision2D collision)

@@ -25,16 +25,21 @@ public class Pickup : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if(isHealth)
-            {
-                player.AddHealthPack();
-            }
-            else if (isAmmo)
-            {
-                gun.AddAmmo(ammoToGive);
-            }
+            EnablePowerups();
             audioSource.PlayOneShot(pickupSFX);
             Destroy(gameObject);
+        }
+    }
+
+    private void EnablePowerups()
+    {
+        if (isHealth)
+        {
+            player.AddHealthPack();
+        }
+        else if (isAmmo)
+        {
+            gun.AddAmmo(ammoToGive);
         }
     }
 }
