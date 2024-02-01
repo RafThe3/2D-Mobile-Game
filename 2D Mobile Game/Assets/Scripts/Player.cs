@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float healDelay = 1;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthPacksText;
-    [SerializeField] private AudioClip healSFX, healPickupSFX, hurtSFX;
+    [SerializeField] private AudioClip healSFX, hurtSFX;
     [SerializeField] private Canvas loseScreen;
 
     [Header("Controls")]
@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
         StartCoroutine(Dash());
     }
 
-    public IEnumerator Dash()
+    private IEnumerator Dash()
     {
         Vector2 move = DetermineControls();
         canDash = false;
@@ -246,7 +246,6 @@ public class Player : MonoBehaviour
     public void AddHealthPack()
     {
         healthPacks++;
-        audioSource.PlayOneShot(healPickupSFX);
     }
     //
 

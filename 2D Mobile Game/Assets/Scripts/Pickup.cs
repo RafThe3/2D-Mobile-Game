@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    private Player player;
-    private Gun gun;
     [SerializeField] private bool isHealth = true, isAmmo = false;
     [Min(0), SerializeField] private int ammoToGive = 30;
+    [SerializeField] private AudioClip pickupSFX;
+
+    //Internal Variables
+    private Player player;
+    private Gun gun;
+    private AudioSource audioSource;
+    //
 
     private void Awake()
     {
         player = FindObjectOfType<Player>();
         gun = FindObjectOfType<Gun>();
+        audioSource = Camera.main.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,6 +33,7 @@ public class Pickup : MonoBehaviour
             {
                 gun.AddAmmo(ammoToGive);
             }
+            audioSource.PlayOneShot(pickupSFX);
             Destroy(gameObject);
         }
     }

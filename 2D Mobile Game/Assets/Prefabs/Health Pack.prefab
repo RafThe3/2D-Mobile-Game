@@ -149,3 +149,4 @@ MonoBehaviour:
   isHealth: 1
   isAmmo: 0
   ammoToGive: 30
+  pickupSFX: {fileID: 8300000, guid: 2dc35d77cfe164a2eab57d08500740e2, type: 3}

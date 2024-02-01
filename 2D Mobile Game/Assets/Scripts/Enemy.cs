@@ -18,11 +18,15 @@ public class Enemy : MonoBehaviour
     [Min(0) ,SerializeField] private int damageToDeal = 1;
     [Min(0) ,SerializeField] private float damageDelay = 1;
 
+    [Header("Other")]
+    [SerializeField] private AudioClip hurtSFX;
+
     //Internal Variables
     private int currentHealth = 0;
     private float damageTimer;
     private GameObject player;
     private Rigidbody2D rb;
+    private AudioSource audioSource;
     //Game specific only - remove if unnecessary
     private EnemyCounter enemyCounter;
     //
@@ -41,6 +45,7 @@ public class Enemy : MonoBehaviour
         enemyCounter = FindObjectOfType<EnemyCounter>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = Camera.main.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -90,6 +95,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        audioSource.PlayOneShot(hurtSFX);
     }
 
     private void DealDamage(int damage)
