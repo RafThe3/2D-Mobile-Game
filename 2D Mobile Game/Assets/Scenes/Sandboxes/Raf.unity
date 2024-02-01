@@ -1083,7 +1083,7 @@ Transform:
   - {fileID: 1263939161}
   - {fileID: 849088536}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &679446562
 GameObject:
@@ -1457,7 +1457,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &849088535
 GameObject:
@@ -1707,7 +1707,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &868743773
 MonoBehaviour:
@@ -2925,7 +2925,7 @@ Transform:
   - {fileID: 1466950500}
   - {fileID: 2137511221}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561437592
 GameObject:
@@ -3033,7 +3033,7 @@ Transform:
   m_Children:
   - {fileID: 728829066}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1643120527
 GameObject:
@@ -5002,7 +5002,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 473933058325372582, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 473933058325372582, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5044,6 +5044,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 473933058325372586, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
+      propertyPath: isAmmo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 473933058325372586, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
+      propertyPath: isSpeedBoost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 473933058325372586, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
+      propertyPath: boostDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 473933058325372586, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
+      propertyPath: speedMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 473933058325372589, guid: cf3a965972747a24c909b60dbf2dd4b4, type: 3}
       propertyPath: m_Name
       value: Ammo
@@ -5060,7 +5076,7 @@ PrefabInstance:
     - target: {fileID: 2839481786963985560, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
       propertyPath: hurtSFX
       value: 
-      objectReference: {fileID: 8300000, guid: a1a3178f0271f49c5a12bc0c347e6e52, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2839481786963985560, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
       propertyPath: healthBar
       value: 
@@ -5083,7 +5099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2839481786963985572, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2839481786963985572, guid: 006652d08d538c241922b8389f1aacb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5144,7 +5160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1006779363583652490, guid: e2e871367e3ca6b4e8e5fc32be73a04a, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1006779363583652490, guid: e2e871367e3ca6b4e8e5fc32be73a04a, type: 3}
       propertyPath: m_LocalPosition.x
