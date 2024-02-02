@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
 
         if (isMoving)
         {
-            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1);
+            transform.localScale = new Vector2(Mathf.Sign(-rb.velocity.x), 1);
         }
     }
     //
@@ -98,7 +98,8 @@ public class Enemy : MonoBehaviour
     //Health and Damage
     private void DisplayHealth()
     {
-        Vector3 originalScale = gameObject.transform.localScale.x < 0 ? new(-healthBarScale.x, healthBarScale.y, healthBarScale.z) : healthBarScale;
+        Vector3 originalScale = gameObject.transform.localScale.x < 0 ? new(-healthBarScale.x, healthBarScale.y, healthBarScale.z) 
+            : healthBarScale;
         healthBar.transform.localScale = originalScale;
 
         if (currentHealth < maxHealth)
