@@ -10,6 +10,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private bool automaticFire = true;
     [SerializeField] private bool infiniteAmmo = true;
     [Min(0), SerializeField] private float shootDelay = 1;
+    [Min(0), SerializeField] private float reloadInterval = 1;
     [Min(0), SerializeField] private int damageToDeal = 1;
     [Min(0), SerializeField] private int startingAmmo = 30;
     [Min(0), SerializeField] private int maxAmmo = 150;
@@ -30,6 +31,7 @@ public class Gun : MonoBehaviour
     private float shootTimer;
     private int currentAmmo, reserveAmmo;
     private AudioSource audioSource;
+    private bool isReloading;
 
     private void Awake()
     {
@@ -67,16 +69,16 @@ public class Gun : MonoBehaviour
             else
             {
                 bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
-                if (isShooting && shootTimer >= shootDelay)
+                if (isShooting && shootTimer >= shootDelay && !isReloading)
                 {
                     Shoot();
                 }
             }
 
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && !isReloading)
             {
-                Reload();
+                StartCoroutine(Reload(reloadInterval));
             }
         }
     }
@@ -106,8 +108,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Reload()
+    public IEnumerator Reload(float reloadInterval)
     {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadInterval);
+
         if (((!infiniteAmmo && reserveAmmo > 0) || infiniteAmmo) && currentAmmo < startingAmmo)
         {
             audioSource.PlayOneShot(reloadSFX);
@@ -130,6 +135,8 @@ public class Gun : MonoBehaviour
                 reserveAmmo -= reloadAmount;
             }
         }
+
+        isReloading = false;
     }
 
     public void Shoot()

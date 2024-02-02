@@ -29,14 +29,4 @@ public class EnemyCounter : MonoBehaviour
             Time.timeScale = 0;
         }
     }
-
-    public void LoadScene(int scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
-
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 }
