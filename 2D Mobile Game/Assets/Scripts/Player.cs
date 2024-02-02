@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     private int healthPacks;
     private int currentHealth;
     private AudioSource audioSource;
-    private float healTimer;
+    private bool isHealing;
     //
 
     //Other
@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
         healthBar.value = healthBar.maxValue;
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
-        healTimer = healDelay;
         //
 
         //Other
@@ -92,8 +91,6 @@ public class Player : MonoBehaviour
         {
             return;
         }
-
-        healTimer += Time.deltaTime;
 
         if (canMove)
         {
@@ -117,9 +114,9 @@ public class Player : MonoBehaviour
             Die();
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) /*&& healTimer >= healDelay && healthPacks > 0*/
+        if (Input.GetKeyDown(KeyCode.E) && !isHealing)
         {
-            Heal(healAmount);
+            StartCoroutine(Heal(healAmount, healDelay));
         }
 
         //Test
@@ -183,7 +180,10 @@ public class Player : MonoBehaviour
 
     public void ButtonDash()
     {
-        StartCoroutine(Dash());
+        if (!isDashing)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     private IEnumerator Dash()
@@ -232,8 +232,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Heal(int health)
+    public IEnumerator Heal(int health, float healInterval)
     {
+        isHealing = true;
+
         if (currentHealth < maxHealth && healthPacks > 0) /*&& healTimer >= healDelay*/
         {
             currentHealth += health;
@@ -241,7 +243,16 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(healSFX);
         }
 
-        healTimer = 0;
+        yield return new WaitForSeconds(healInterval);
+        isHealing = false;
+    }
+
+    public void ButtonHeal()
+    {
+        if (!isHealing)
+        {
+            StartCoroutine(Heal(healAmount, healDelay));
+        }
     }
 
     private void Die()

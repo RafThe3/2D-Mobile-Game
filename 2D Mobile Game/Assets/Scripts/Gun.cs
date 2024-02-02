@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Gun : MonoBehaviour
     [Header("Other")]
     [SerializeField] private AudioClip shootSFX;
     [SerializeField] private AudioClip reloadSFX;
+    [SerializeField] private Slider reloadTimer;
     [SerializeField] private TMPro.TextMeshProUGUI ammoText;
     [SerializeField] private Joystick aimingJoystick;
 
@@ -48,6 +50,8 @@ public class Gun : MonoBehaviour
         {
             maxAmmo = reserveAmmo;
         }
+        reloadTimer.maxValue = reloadInterval;
+        reloadTimer.value = reloadTimer.maxValue;
     }
 
     private void Update()
@@ -80,6 +84,11 @@ public class Gun : MonoBehaviour
             {
                 StartCoroutine(Reload(reloadInterval));
             }
+
+            if (reloadTimer.value < reloadTimer.maxValue && isReloading)
+            {
+                reloadTimer.value += Time.deltaTime;
+            }
         }
     }
 
@@ -110,10 +119,16 @@ public class Gun : MonoBehaviour
 
     public IEnumerator Reload(float reloadInterval)
     {
-        isReloading = true;
+        bool hasReloaded = ((!infiniteAmmo && reserveAmmo > 0) || infiniteAmmo) && currentAmmo < startingAmmo;
+        if (hasReloaded)
+        {
+            isReloading = true;
+            reloadTimer.value = 0;
+        }
+
         yield return new WaitForSeconds(reloadInterval);
 
-        if (((!infiniteAmmo && reserveAmmo > 0) || infiniteAmmo) && currentAmmo < startingAmmo)
+        if (hasReloaded)
         {
             audioSource.PlayOneShot(reloadSFX);
         }
@@ -165,7 +180,7 @@ public class Gun : MonoBehaviour
         aim.y = aimingJoystick.Vertical;
         bool isAiming = Mathf.Abs(aim.x) > 0 && Mathf.Abs(aim.y) > 0;
 
-        if (currentAmmo > 0 && isAiming)
+        if (currentAmmo > 0 && isAiming && !isReloading)
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             Vector3 shootDir = new(aim.x, aim.y);
@@ -176,6 +191,14 @@ public class Gun : MonoBehaviour
             Destroy(bullet, bulletLifeTime);
             currentAmmo--;
             shootTimer = 0;
+        }
+    }
+
+    public void ButtonReload()
+    {
+        if (!isReloading)
+        {
+            StartCoroutine(Reload(reloadInterval));
         }
     }
 
