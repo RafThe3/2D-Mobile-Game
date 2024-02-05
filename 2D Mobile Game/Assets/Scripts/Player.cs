@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private int maxHealth = 100;
     [Min(0), SerializeField] private int healAmount = 1;
     [Min(0), SerializeField] private int startingHealthPacks = 1;
+    [Min(0), SerializeField] private int maxHealthPacks = 10;
     [Min(0), SerializeField] private float healDelay = 1;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthPacksText;
@@ -78,6 +79,10 @@ public class Player : MonoBehaviour
         healthBar.value = healthBar.maxValue;
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
+        if (maxHealthPacks == 0)
+        {
+            maxHealthPacks = startingHealthPacks;
+        }
         //
 
         //Other
@@ -188,15 +193,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ButtonDash()
-    {
-        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
-        if (!isDashing && isMoving)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-
     private IEnumerator Dash()
     {
         Vector2 move = DetermineControls();
@@ -218,6 +214,17 @@ public class Player : MonoBehaviour
         moveSpeed *= speedMultiplier;
         yield return new WaitForSeconds(duration);
         moveSpeed = tempMoveSpeed;
+    }
+    //
+
+    //Mobile Controls - Movement and Controls
+    public void ButtonDash()
+    {
+        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        if (!isDashing && isMoving)
+        {
+            StartCoroutine(Dash());
+        }
     }
     //
 
@@ -259,13 +266,6 @@ public class Player : MonoBehaviour
         isHealing = false;
     }
 
-    public void ButtonHeal()
-    {
-        if (!isHealing)
-        {
-            StartCoroutine(Heal(healAmount, healDelay));
-        }
-    }
 
     private void Die()
     {
@@ -278,7 +278,20 @@ public class Player : MonoBehaviour
 
     public void AddHealthPack()
     {
-        healthPacks++;
+        if (healthPacks < maxHealthPacks)
+        {
+            healthPacks++;
+        }
+    }
+    //
+
+    //Mobile Controls - Health
+    public void ButtonHeal()
+    {
+        if (!isHealing)
+        {
+            StartCoroutine(Heal(healAmount, healDelay));
+        }
     }
     //
 
