@@ -17,11 +17,13 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float dashCooldown = 1;
     [Min(0), SerializeField] private float dashTime = 0.1f;
     [SerializeField] private AudioClip dashSFX;
+    [SerializeField] private Slider dashTimer;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
     [Min(0), SerializeField] private int healAmount = 1;
     [Min(0), SerializeField] private int startingHealthPacks = 1;
+    [Min(0), SerializeField] private int maxHealthPacks = 10;
     [Min(0), SerializeField] private float healDelay = 1;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthPacksText;
@@ -29,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Canvas loseScreen;
 
     [Header("Controls")]
-    [Tooltip("Allows the game to be played with keyboard if set to true.")] public bool allowKeyControls = true;
+    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
@@ -46,14 +48,13 @@ public class Player : MonoBehaviour
     //
 
     //Other
+    private bool allowGravity = false;
     //private Animator animator;
     private Collider2D cldr;
     private Rigidbody2D rb;
-    private bool allowGravity = false;
     //
 
     //
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -63,10 +64,12 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //Controls
+        //Movement and Controls
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
+        dashTimer.maxValue = dashCooldown;
+        dashTimer.value = dashTimer.maxValue;
         //
 
         //Health
@@ -75,6 +78,10 @@ public class Player : MonoBehaviour
         healthBar.value = healthBar.maxValue;
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacks = startingHealthPacks;
+        if (maxHealthPacks == 0)
+        {
+            maxHealthPacks = startingHealthPacks;
+        }
         //
 
         //Other
@@ -92,22 +99,29 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (dashTimer.value < dashTimer.maxValue && !isDashing)
+        {
+            dashTimer.value += Time.deltaTime;
+        }
+
         if (canMove)
         {
             //Sets the move variable depending on the controls
             Vector2 move = DetermineControls();
             MovePlayer(move);
 
-            if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
+            if (Input.GetButtonDown("Jump") && allowGravity)
             {
                 Jump();
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+            bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
             {
                 StartCoroutine(Dash());
             }
         }
+
 
         if (currentHealth <= 0)
         {
@@ -178,14 +192,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ButtonDash()
-    {
-        if (!isDashing)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-
     private IEnumerator Dash()
     {
         Vector2 move = DetermineControls();
@@ -194,6 +200,7 @@ public class Player : MonoBehaviour
         float dashMultiplier = dashForce * 10;
         audioSource.PlayOneShot(dashSFX);
         rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
+        dashTimer.value = 0;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
@@ -206,6 +213,17 @@ public class Player : MonoBehaviour
         moveSpeed *= speedMultiplier;
         yield return new WaitForSeconds(duration);
         moveSpeed = tempMoveSpeed;
+    }
+    //
+
+    //Mobile Controls - Movement and Controls
+    public void ButtonDash()
+    {
+        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        if (!isDashing && isMoving)
+        {
+            StartCoroutine(Dash());
+        }
     }
     //
 
@@ -236,7 +254,7 @@ public class Player : MonoBehaviour
     {
         isHealing = true;
 
-        if (currentHealth < maxHealth && healthPacks > 0) /*&& healTimer >= healDelay*/
+        if (currentHealth < maxHealth && healthPacks > 0)
         {
             currentHealth += health;
             healthPacks--;
@@ -247,13 +265,6 @@ public class Player : MonoBehaviour
         isHealing = false;
     }
 
-    public void ButtonHeal()
-    {
-        if (!isHealing)
-        {
-            StartCoroutine(Heal(healAmount, healDelay));
-        }
-    }
 
     private void Die()
     {
@@ -266,7 +277,20 @@ public class Player : MonoBehaviour
 
     public void AddHealthPack()
     {
-        healthPacks++;
+        if (healthPacks < maxHealthPacks)
+        {
+            healthPacks++;
+        }
+    }
+    //
+
+    //Mobile Controls - Health
+    public void ButtonHeal()
+    {
+        if (!isHealing)
+        {
+            StartCoroutine(Heal(healAmount, healDelay));
+        }
     }
     //
 
@@ -278,6 +302,11 @@ public class Player : MonoBehaviour
         healthBar.value = currentHealth;
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
         healthBarFillArea.color = currentHealth > 25 ? Color.green : Color.red;
+    }
+
+    public bool AllowsKeyControls()
+    {
+        return allowKeyControls;
     }
     //
 }

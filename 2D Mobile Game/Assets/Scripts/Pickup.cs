@@ -25,10 +25,15 @@ public class Pickup : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            EnablePowerups();
-            audioSource.PlayOneShot(pickupSFX);
-            Destroy(gameObject);
+            PickupItem();
         }
+    }
+
+    private void PickupItem()
+    {
+        EnablePowerups();
+        audioSource.PlayOneShot(pickupSFX);
+        Destroy(gameObject);
     }
 
     private void EnablePowerups()
