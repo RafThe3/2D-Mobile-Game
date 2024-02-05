@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float dashCooldown = 1;
     [Min(0), SerializeField] private float dashTime = 0.1f;
     [SerializeField] private AudioClip dashSFX;
+    [SerializeField] private Slider dashTimer;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
@@ -63,10 +64,12 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //Controls
+        //Movement and Controls
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
+        dashTimer.maxValue = dashCooldown;
+        dashTimer.value = dashTimer.maxValue;
         //
 
         //Health
@@ -92,22 +95,29 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (dashTimer.value < dashTimer.maxValue && !isDashing)
+        {
+            dashTimer.value += Time.deltaTime;
+        }
+
         if (canMove)
         {
             //Sets the move variable depending on the controls
             Vector2 move = DetermineControls();
             MovePlayer(move);
 
-            if (Input.GetKeyDown(KeyCode.Space) && allowGravity)
+            if (Input.GetButtonDown("Jump") && allowGravity)
             {
                 Jump();
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+            bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
             {
                 StartCoroutine(Dash());
             }
         }
+
 
         if (currentHealth <= 0)
         {
@@ -180,7 +190,8 @@ public class Player : MonoBehaviour
 
     public void ButtonDash()
     {
-        if (!isDashing)
+        bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        if (!isDashing && isMoving)
         {
             StartCoroutine(Dash());
         }
@@ -194,6 +205,7 @@ public class Player : MonoBehaviour
         float dashMultiplier = dashForce * 10;
         audioSource.PlayOneShot(dashSFX);
         rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
+        dashTimer.value = 0;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
@@ -236,7 +248,7 @@ public class Player : MonoBehaviour
     {
         isHealing = true;
 
-        if (currentHealth < maxHealth && healthPacks > 0) /*&& healTimer >= healDelay*/
+        if (currentHealth < maxHealth && healthPacks > 0)
         {
             currentHealth += health;
             healthPacks--;

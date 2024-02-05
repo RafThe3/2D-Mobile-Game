@@ -80,7 +80,7 @@ public class Gun : MonoBehaviour
             }
 
 
-            if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+            if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < startingAmmo)
             {
                 StartCoroutine(Reload(reloadInterval));
             }
@@ -196,7 +196,7 @@ public class Gun : MonoBehaviour
 
     public void ButtonReload()
     {
-        if (!isReloading)
+        if (!isReloading && currentAmmo < startingAmmo)
         {
             StartCoroutine(Reload(reloadInterval));
         }
