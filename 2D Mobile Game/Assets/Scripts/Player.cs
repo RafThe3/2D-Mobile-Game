@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Canvas loseScreen;
 
     [Header("Controls")]
-    [Tooltip("Allows the game to be played with keyboard if set to true.")] public bool allowKeyControls = true;
+    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
@@ -48,14 +48,13 @@ public class Player : MonoBehaviour
     //
 
     //Other
+    private bool allowGravity = false;
     //private Animator animator;
     private Collider2D cldr;
     private Rigidbody2D rb;
-    private bool allowGravity = false;
     //
 
     //
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -303,6 +302,11 @@ public class Player : MonoBehaviour
         healthBar.value = currentHealth;
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
         healthBarFillArea.color = currentHealth > 25 ? Color.green : Color.red;
+    }
+
+    public bool AllowsKeyControls()
+    {
+        return allowKeyControls;
     }
     //
 }

@@ -63,7 +63,7 @@ public class Gun : MonoBehaviour
 
         if (canShoot)
         {
-            if (FindObjectOfType<Player>().allowKeyControls)
+            if (FindObjectOfType<Player>().AllowsKeyControls())
             {
                 bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
                 if (isShooting && shootTimer >= shootDelay && !isReloading)

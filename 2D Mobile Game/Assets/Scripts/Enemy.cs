@@ -11,11 +11,11 @@ public class Enemy : MonoBehaviour
     [Min(0), SerializeField] private float moveSpeed = 1;
     
     [Header("Health")]
-    [Min(0) ,SerializeField] private int maxHealth = 100;
+    [Min(0), SerializeField] private int maxHealth = 100;
 
     [Header("Damage")]
-    [Min(0) ,SerializeField] private int damageToDeal = 1;
-    [Min(0) ,SerializeField] private float damageDelay = 1;
+    [Min(0), SerializeField] private int damageToDeal = 1;
+    [Min(0), SerializeField] private float damageDelay = 1;
 
     [Header("Other")]
     [SerializeField] private AudioClip hurtSFX;
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     private int currentHealth = 0;
     private float damageTimer;
     private Slider healthBar;
-    private GameObject player;
+    private Player player;
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private Vector3 healthBarScale;
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     {
         //enemyCounter = FindObjectOfType<EnemyCounter>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = Camera.main.GetComponent<AudioSource>();
         healthBar = GetComponentInChildren<Slider>();
     }
@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
 
     private void DealDamage(int damage)
     {
-        player.GetComponent<Player>().TakeDamage(damage);
+        player.TakeDamage(damage);
         damageTimer = 0;
     }
 

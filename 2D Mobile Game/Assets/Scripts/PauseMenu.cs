@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        allowKeyControls = FindObjectOfType<Player>().allowKeyControls;
+        allowKeyControls = FindObjectOfType<Player>().AllowsKeyControls();
         pauseMenu.enabled = false;
     }
 
