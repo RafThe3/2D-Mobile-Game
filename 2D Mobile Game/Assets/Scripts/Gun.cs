@@ -63,14 +63,7 @@ public class Gun : MonoBehaviour
 
         if (canShoot)
         {
-            if (!FindObjectOfType<Player>().allowKeyControls)
-            {
-                if (shootTimer >= shootDelay)
-                {
-                    JoystickShoot();
-                }
-            }
-            else
+            if (FindObjectOfType<Player>().allowKeyControls)
             {
                 bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
                 if (isShooting && shootTimer >= shootDelay && !isReloading)
@@ -78,7 +71,13 @@ public class Gun : MonoBehaviour
                     Shoot();
                 }
             }
-
+            else
+            {
+                if (shootTimer >= shootDelay)
+                {
+                    JoystickShoot();
+                }
+            }
 
             if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < startingAmmo)
             {

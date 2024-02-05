@@ -972,7 +972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &238169781
 Transform:
   m_ObjectHideFlags: 0
@@ -1232,7 +1232,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -704.7013, w: 0}
+  m_margin: {x: 0, y: 0, z: -137.1629, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2479,13 +2479,14 @@ MonoBehaviour:
   moveSpeed: 1
   jumpForce: 4.15
   dashForce: 3.5
-  dashCooldown: 2.2
+  dashCooldown: 1.7
   dashTime: 0.1
   dashSFX: {fileID: 8300000, guid: 90fb91c5d9f18df4183363d36d921429, type: 3}
   dashTimer: {fileID: 709041019}
   maxHealth: 100
   healAmount: 10
-  startingHealthPacks: 10
+  startingHealthPacks: 5
+  maxHealthPacks: 10
   healDelay: 1.3
   healthBar: {fileID: 1846415097}
   healthPacksText: {fileID: 679446564}
@@ -4182,7 +4183,7 @@ MonoBehaviour:
   - {fileID: 809869012}
   - {fileID: 1091840023}
   numberOfObjects: 14
-  spawnInterval: 15
+  spawnInterval: 5
 --- !u!4 &1527819826
 Transform:
   m_ObjectHideFlags: 0
@@ -4555,7 +4556,7 @@ MonoBehaviour:
   - {fileID: 1172280035}
   - {fileID: 203863226}
   numberOfObjects: 20
-  spawnInterval: 1.5
+  spawnInterval: 2
 --- !u!4 &1723988554
 Transform:
   m_ObjectHideFlags: 0
@@ -5594,7 +5595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 513, y: -201}
+  m_AnchoredPosition: {x: 510, y: -201}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1964745257
