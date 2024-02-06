@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        allowKeyControls = FindObjectOfType<Player>().allowKeyControls;
+        allowKeyControls = FindObjectOfType<Player>().AllowsKeyControls();
         pauseMenu.enabled = false;
     }
 
@@ -47,10 +47,5 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quitting");
         Application.Quit();
-    }
-
-    public void LoadAScene(int scene)
-    {
-        SceneManager.LoadScene(scene);
     }
 }

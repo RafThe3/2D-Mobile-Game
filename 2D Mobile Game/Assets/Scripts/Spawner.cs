@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject[] prefabs, spawnPoints;
     [Min(0), SerializeField] private int numberOfObjects = 1;
     [Min(0), SerializeField] private float spawnInterval = 1;
+    [Min(0), SerializeField] private bool endlessSpawn = false;
 
     //Game specific only - remove if unnecessary
     //private EnemyCounter enemyCounter;
@@ -29,7 +30,9 @@ public class Spawner : MonoBehaviour
     {
         spawnTimer += Time.deltaTime;
 
-        if (spawnTimer >= spawnInterval && objectsSpawned < numberOfObjects)
+        bool isReadyToSpawn = (spawnTimer >= spawnInterval && objectsSpawned < numberOfObjects && !endlessSpawn)
+                              || (spawnTimer >= spawnInterval && endlessSpawn);
+        if (isReadyToSpawn)
         {
             SpawnObject();
         }

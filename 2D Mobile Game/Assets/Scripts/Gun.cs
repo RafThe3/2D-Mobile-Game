@@ -57,13 +57,13 @@ public class Gun : MonoBehaviour
     private void Update()
     {
         FixAmmoBugs();
-        UpdateText();
+        UpdateUI();
 
         shootTimer += Time.deltaTime;
 
         if (canShoot)
         {
-            if (FindObjectOfType<Player>().allowKeyControls)
+            if (FindObjectOfType<Player>().AllowsKeyControls())
             {
                 bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
                 if (isShooting && shootTimer >= shootDelay && !isReloading)
@@ -91,11 +91,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private void UpdateText()
+    private void UpdateUI()
     {
         //Ammo
         ammoText.text = !infiniteAmmo ? $"Ammo: {currentAmmo} / {reserveAmmo}" : $"Ammo: {currentAmmo} / {Mathf.Infinity}";
-        ammoText.color = currentAmmo <= 10 ? Color.red : Color.white;
+        ammoText.color = currentAmmo > 10 ? Color.white : currentAmmo > 0 && currentAmmo <= 10 ? Color.yellow : Color.red;
     }
 
     private void FixAmmoBugs()
