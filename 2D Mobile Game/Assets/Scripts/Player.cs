@@ -41,20 +41,17 @@ public class Player : MonoBehaviour
     private bool isDashing = false;
 
     //Health
-    private int healthPacks;
-    private int currentHealth;
+    private int healthPacks = 0;
+    private int currentHealth = 0;
     private AudioSource audioSource;
     private bool isHealing;
-    //
 
     //Other
     private bool allowGravity = false;
-    //private Animator animator;
     private Collider2D cldr;
+    //private Animator animator;
     private Rigidbody2D rb;
-    //
 
-    //
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -70,7 +67,6 @@ public class Player : MonoBehaviour
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
         dashTimer.maxValue = dashCooldown;
         dashTimer.value = dashTimer.maxValue;
-        //
 
         //Health
         currentHealth = maxHealth;
@@ -82,14 +78,13 @@ public class Player : MonoBehaviour
         {
             maxHealthPacks = startingHealthPacks;
         }
-        //
 
         //Other
         audioSource = Camera.main.GetComponent<AudioSource>();
         //animator = GetComponent<Animator>();
+        //Game specific - remove if unnecessary
         loseScreen.enabled = false;
         Time.timeScale = 1;
-        //
     }
 
     private void Update()
@@ -122,7 +117,6 @@ public class Player : MonoBehaviour
             }
         }
 
-
         if (currentHealth <= 0)
         {
             Die();
@@ -138,11 +132,9 @@ public class Player : MonoBehaviour
         {
             TakeDamage(10);
         }
-        //
 
         FixHealthBugs();
         UpdateUI();
-        
     }
 
     //Movement and Controls
@@ -214,7 +206,6 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(duration);
         moveSpeed = tempMoveSpeed;
     }
-    //
 
     //Mobile Controls - Movement and Controls
     public void ButtonDash()
@@ -225,7 +216,6 @@ public class Player : MonoBehaviour
             StartCoroutine(Dash());
         }
     }
-    //
 
     //Health
     private void FixHealthBugs()
@@ -272,7 +262,6 @@ public class Player : MonoBehaviour
         //Game specific only - remove if unnecessary
         loseScreen.enabled = true;
         Time.timeScale = 0;
-        //
     }
 
     public void AddHealthPack()
@@ -282,7 +271,6 @@ public class Player : MonoBehaviour
             healthPacks++;
         }
     }
-    //
 
     //Mobile Controls - Health
     public void ButtonHeal()
@@ -292,7 +280,6 @@ public class Player : MonoBehaviour
             StartCoroutine(Heal(healAmount, healDelay));
         }
     }
-    //
 
     //Other
     private void UpdateUI()
@@ -308,5 +295,4 @@ public class Player : MonoBehaviour
     {
         return allowKeyControls;
     }
-    //
 }
