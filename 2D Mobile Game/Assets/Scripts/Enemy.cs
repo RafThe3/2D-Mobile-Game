@@ -68,7 +68,6 @@ public class Enemy : MonoBehaviour
         FixHealthBugs();
 
         damageTimer += Time.deltaTime;
-        
     }
 
     //Movement
@@ -99,7 +98,7 @@ public class Enemy : MonoBehaviour
     private void DisplayHealth()
     {
         Vector3 originalScale = gameObject.transform.localScale.x < 0 ? new(-healthBarScale.x, healthBarScale.y, healthBarScale.z) 
-            : healthBarScale;
+                                : healthBarScale;
         healthBar.transform.localScale = originalScale;
 
         if (currentHealth < maxHealth)
@@ -125,6 +124,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         canMove = false;
+        FindObjectOfType<PlayerStats>().AddKill();
         healthBar.gameObject.SetActive(false);
         Destroy(gameObject);
 
