@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         //Other
         audioSource = Camera.main.GetComponent<AudioSource>();
         //animator = GetComponent<Animator>();
-        //loseScreen.enabled = false;
+        loseScreen.enabled = false;
         Time.timeScale = 1;
         //
     }
