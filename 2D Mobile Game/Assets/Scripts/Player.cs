@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     //Internal Variables
 
     //Movement
-    private bool isDashing = false;
+    private bool isDashing = false, isMoving = false;
 
     //Health
     private int healthPacks = 0;
@@ -143,8 +143,10 @@ public class Player : MonoBehaviour
     {
         float moveMultiplier = moveSpeed * 10;
         Vector3 movePlayer = new(x: move.x, y: !allowGravity ? move.y : rb.velocity.y);
+        isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
 
         rb.velocity = moveMultiplier * movePlayer;
+        animator.SetBool("isMoving", isMoving);
         FlipSprite();
     }
 
@@ -193,6 +195,7 @@ public class Player : MonoBehaviour
         float dashMultiplier = dashForce * 10;
         audioSource.PlayOneShot(dashSFX);
         rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
+        animator.SetTrigger("Dash");
         dashBar.value = 0;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
