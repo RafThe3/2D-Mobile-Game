@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private float dashCooldown = 1;
     [Min(0), SerializeField] private float dashTime = 0.1f;
     [SerializeField] private AudioClip dashSFX;
-    [SerializeField] private Slider dashTimer;
+    [SerializeField] private Slider dashBar;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     private Collider2D cldr;
     //private Animator animator;
     private Rigidbody2D rb;
+    private Vector3 dashBarScale;
 
     private void Awake()
     {
@@ -65,8 +66,8 @@ public class Player : MonoBehaviour
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
-        dashTimer.maxValue = dashCooldown;
-        dashTimer.value = dashTimer.maxValue;
+        dashBar.maxValue = dashCooldown;
+        dashBar.value = dashBar.maxValue;
 
         //Health
         currentHealth = maxHealth;
@@ -94,9 +95,9 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (dashTimer.value < dashTimer.maxValue && !isDashing)
+        if (dashBar.value < dashBar.maxValue && !isDashing)
         {
-            dashTimer.value += Time.deltaTime;
+            dashBar.value += Time.deltaTime;
         }
 
         if (canMove)
@@ -192,7 +193,7 @@ public class Player : MonoBehaviour
         float dashMultiplier = dashForce * 10;
         audioSource.PlayOneShot(dashSFX);
         rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
-        dashTimer.value = 0;
+        dashBar.value = 0;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         yield return new WaitForSeconds(dashCooldown);

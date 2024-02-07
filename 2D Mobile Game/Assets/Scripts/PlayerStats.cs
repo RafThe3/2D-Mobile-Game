@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
 
     //Internal Variables
     private int kills = 0, money = 0, score = 0;
-    float seconds = 0, minutes = 0, hours = 0;
+    private float seconds = 0, minutes = 0, hours = 0;
 
     // Start is called before the first frame update
     private void Start()
@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
             hours++;
             minutes = 0;
         }
-        timeText.text = $"{hours}:{minutes}:{(int)seconds}";
+        timeText.text = $"Time: {hours}:{minutes}:{(int)seconds}";
     }
 
     public void AddKill()

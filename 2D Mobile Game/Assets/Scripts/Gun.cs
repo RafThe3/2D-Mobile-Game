@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
     [Header("Other")]
     [SerializeField] private AudioClip shootSFX;
     [SerializeField] private AudioClip reloadSFX;
-    [SerializeField] private Slider reloadTimer;
+    [SerializeField] private Slider reloadBar;
     [SerializeField] private TMPro.TextMeshProUGUI ammoText;
     [SerializeField] private Joystick aimingJoystick;
 
@@ -50,8 +50,8 @@ public class Gun : MonoBehaviour
         {
             maxAmmo = reserveAmmo;
         }
-        reloadTimer.maxValue = reloadInterval;
-        reloadTimer.value = reloadTimer.maxValue;
+        reloadBar.maxValue = reloadInterval;
+        reloadBar.value = reloadBar.maxValue;
     }
 
     private void Update()
@@ -84,9 +84,9 @@ public class Gun : MonoBehaviour
                 StartCoroutine(Reload(reloadInterval));
             }
 
-            if (reloadTimer.value < reloadTimer.maxValue && isReloading)
+            if (reloadBar.value < reloadBar.maxValue && isReloading)
             {
-                reloadTimer.value += Time.deltaTime;
+                reloadBar.value += Time.deltaTime;
             }
         }
     }
@@ -122,7 +122,7 @@ public class Gun : MonoBehaviour
         if (hasReloaded)
         {
             isReloading = true;
-            reloadTimer.value = 0;
+            reloadBar.value = 0;
         }
 
         yield return new WaitForSeconds(reloadInterval);
