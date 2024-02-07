@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
         dashBar.maxValue = dashCooldown;
         dashBar.value = dashBar.maxValue;
+        dashBarScale = dashBar.transform.localScale;
 
         //Health
         currentHealth = maxHealth;
@@ -287,6 +288,10 @@ public class Player : MonoBehaviour
     {
         healthPacksText.text = $"Health Packs: {healthPacks}";
         healthPacksText.color = healthPacks > 0 ? Color.white : Color.red;
+        Vector3 originalScale = gameObject.transform.localScale.x < 0 ? new(-dashBarScale.x, dashBarScale.y, dashBarScale.z)
+                                : dashBarScale;
+        dashBar.transform.localScale = originalScale;
+        dashBar.gameObject.SetActive(!canDash);
         healthBar.value = currentHealth;
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
         healthBarFillArea.color = currentHealth > 25 ? Color.green : Color.red;

@@ -30,8 +30,7 @@ public class Spawner : MonoBehaviour
     {
         spawnTimer += Time.deltaTime;
 
-        bool isReadyToSpawn = (spawnTimer >= spawnInterval && objectsSpawned < numberOfObjects && !endlessSpawn)
-                              || (spawnTimer >= spawnInterval && endlessSpawn);
+        bool isReadyToSpawn = spawnTimer >= spawnInterval && ((objectsSpawned < numberOfObjects && !endlessSpawn) || endlessSpawn);
         if (isReadyToSpawn)
         {
             SpawnObject();

@@ -124,7 +124,9 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         canMove = false;
-        FindObjectOfType<PlayerStats>().AddKill();
+        PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+        playerStats.AddKill();
+        playerStats.AddScore(20);
         healthBar.gameObject.SetActive(false);
         Destroy(gameObject);
 
