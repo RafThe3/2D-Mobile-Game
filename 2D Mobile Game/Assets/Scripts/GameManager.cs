@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    private void Update()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }
