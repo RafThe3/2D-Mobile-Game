@@ -96,6 +96,7 @@ public class Gun : MonoBehaviour
         //Ammo
         ammoText.text = !infiniteAmmo ? $"Ammo: {currentAmmo} / {reserveAmmo}" : $"Ammo: {currentAmmo} / {Mathf.Infinity}";
         ammoText.color = currentAmmo > 10 ? Color.white : currentAmmo > 0 && currentAmmo <= 10 ? Color.yellow : Color.red;
+        reloadBar.gameObject.SetActive(isReloading);
     }
 
     private void FixAmmoBugs()

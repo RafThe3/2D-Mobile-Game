@@ -11,7 +11,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI timeText;
     [Min(0), SerializeField] private int startingMoney = 0, maxMoney = 0, scoreToGive = 0;
-    [SerializeField] private bool stopTimeCountup = false;
 
     [Header("Lose Screen")]
     [SerializeField] private TextMeshProUGUI lsKillsText;
@@ -38,11 +37,26 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Test
+        if (Input.GetKey(KeyCode.M))
+        {
+            AddMoney(10);
+        }
+        if (Input.GetKey(KeyCode.N))
+        {
+            SubtractMoney(10);
+        }
+
         UpdateText();
     }
 
     private void UpdateText()
     {
+        if (money < 0)
+        {
+            money = 0;
+        }
+
         if (Time.deltaTime == 0)
         {
             lsKillsText.text = $"{kills}";
@@ -56,11 +70,9 @@ public class PlayerStats : MonoBehaviour
             scoreText.text = $"Score: {score}";
             moneyText.text = $"Money: ${money}";
         }
-        if (stopTimeCountup)
-        {
-            return;
-        }
+        
         seconds += Time.deltaTime;
+
         if (seconds >= 60)
         {
             minutes++;
@@ -71,9 +83,9 @@ public class PlayerStats : MonoBehaviour
             hours++;
             minutes = 0;
         }
+
         timeText.text = $"Time: {hours}:{minutes}:{(int)seconds}";
         tempTime = $"{hours}:{minutes}:{(int)seconds}";
-        Debug.Log(timeText.text);
     }
 
     public void AddKill()
@@ -86,6 +98,14 @@ public class PlayerStats : MonoBehaviour
         if (money <= maxMoney)
         {
             this.money += money;
+        }
+    }
+
+    public void SubtractMoney(int money)
+    {
+        if (money > 0)
+        {
+            this.money -= money;
         }
     }
 
