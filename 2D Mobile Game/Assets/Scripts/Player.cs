@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     //Other
     private bool allowGravity = false;
     private Collider2D cldr;
-    //private Animator animator;
+    private Animator animator;
     private Rigidbody2D rb;
     private Vector3 dashBarScale;
 
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cldr = GetComponent<Collider2D>();
         audioSource = Camera.main.GetComponent<AudioSource>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start()
