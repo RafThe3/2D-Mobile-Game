@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cldr = GetComponent<Collider2D>();
         audioSource = Camera.main.GetComponent<AudioSource>();
+        //animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -82,8 +83,6 @@ public class Player : MonoBehaviour
         }
 
         //Other
-        audioSource = Camera.main.GetComponent<AudioSource>();
-        //animator = GetComponent<Animator>();
         //Game specific - remove if unnecessary
         loseScreen.enabled = false;
         Time.timeScale = 1;
