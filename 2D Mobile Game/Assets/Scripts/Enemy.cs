@@ -8,18 +8,25 @@ public class Enemy : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private bool canMove = true;
+    [SerializeField] private EnemyChase enemyChase = EnemyChase.None;
     [Min(0), SerializeField] private float moveSpeed = 1;
+    [Min(0), SerializeField] private float chaseDistance = 1;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
 
     [Header("Damage")]
+    [SerializeField] private EnemyAttack enemyAttack = EnemyAttack.None;
     [Min(0), SerializeField] private int damageToDeal = 1;
     [Min(0), SerializeField] private float damageDelay = 1;
+    [Min(0), SerializeField] private float bulletSpeed = 1;
+    [Min(0), SerializeField] private float bulletLifeTime = 1;
 
     [Header("Other")]
     [SerializeField] private int scoreToGiveAfterDeath = 1;
     [SerializeField] private AudioClip hurtSFX;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private AudioClip shootSFX;
 
     //Internal Variables
     private int currentHealth = 0;
@@ -64,6 +71,11 @@ public class Enemy : MonoBehaviour
         FixHealthBugs();
 
         damageTimer += Time.deltaTime;
+
+        if (enemyAttack == EnemyAttack.Shoot)
+        {
+            Shoot();
+        }
     }
 
     private void FixedUpdate()
@@ -80,11 +92,15 @@ public class Enemy : MonoBehaviour
         float moveMultiplier = 10 * moveSpeed;
         Vector3 playerPosition = player.transform.position;
         Vector3 playerPositionFromEnemy = playerPosition - transform.position;
-        playerPositionFromEnemy.Normalize();
-        Vector3 moveEnemy = moveMultiplier * playerPositionFromEnemy;
 
-        rb.velocity = moveEnemy;
-        FlipSprite();
+        if (enemyChase == EnemyChase.Instantly || (enemyChase == EnemyChase.Proximity && playerPositionFromEnemy.magnitude < chaseDistance))
+        {
+            playerPositionFromEnemy.Normalize();
+            Vector3 moveEnemy = moveMultiplier * playerPositionFromEnemy;
+
+            rb.velocity = moveEnemy;
+            FlipSprite();
+        }
     }
 
     private void FlipSprite()
@@ -138,13 +154,30 @@ public class Enemy : MonoBehaviour
         //enemyCounter.enemiesRemaining--;
     }
 
+    public void Shoot()
+    {
+        if (damageTimer >= damageDelay)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+            Vector3 shootDir = playerPosition - transform.position;
+            shootDir.Normalize();
+            float moveMultiplier = 10 * bulletSpeed;
+            bullet.GetComponent<Rigidbody2D>().velocity = moveMultiplier * shootDir;
+            audioSource.PlayOneShot(shootSFX);
+            Destroy(bullet, bulletLifeTime);
+            damageTimer = 0;
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && damageTimer >= damageDelay)
+        if (collision.gameObject.CompareTag("Player") && damageTimer >= damageDelay && enemyAttack == EnemyAttack.Melee)
         {
             DealDamage(damageToDeal);
         }
     }
+
     private void FixHealthBugs()
     {
         if (currentHealth < 0)
@@ -152,5 +185,9 @@ public class Enemy : MonoBehaviour
             currentHealth = 0;
         }
     }
+
+    private enum EnemyAttack { None, Melee, Shoot }
+
+    private enum EnemyChase { None, Instantly, Proximity }
     //
 }
