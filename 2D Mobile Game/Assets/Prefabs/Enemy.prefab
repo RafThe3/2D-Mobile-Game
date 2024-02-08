@@ -148,10 +148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  moveSpeed: 0.7
+  moveSpeed: 1
   maxHealth: 100
-  damageToDeal: 7
+  damageToDeal: 10
   damageDelay: 2
+  scoreToGiveAfterDeath: 1
   hurtSFX: {fileID: 0}
 --- !u!1 &3057828453310320559
 GameObject:

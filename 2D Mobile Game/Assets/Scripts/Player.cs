@@ -90,32 +90,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (isDashing)
-        {
-            return;
-        }
-
         if (dashBar.value < dashBar.maxValue && !isDashing)
         {
             dashBar.value += Time.deltaTime;
-        }
-
-        if (canMove)
-        {
-            //Sets the move variable depending on the controls
-            Vector2 move = DetermineControls();
-            MovePlayer(move);
-
-            if (Input.GetButtonDown("Jump") && allowGravity)
-            {
-                Jump();
-            }
-
-            bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
-            {
-                StartCoroutine(Dash());
-            }
         }
 
         if (currentHealth <= 0)
@@ -138,15 +115,36 @@ public class Player : MonoBehaviour
         UpdateUI();
     }
 
+    private void FixedUpdate()
+    {
+        if (!isDashing && canMove)
+        {
+            //Sets the move variable depending on the controls
+            Vector2 move = DetermineControls();
+            MovePlayer(move);
+
+            isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+            animator.SetBool("isMoving", isMoving);
+
+            if (Input.GetButtonDown("Jump") && allowGravity)
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
+            {
+                StartCoroutine(Dash());
+            }
+        }
+    }
+
     //Movement and Controls
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 10;
         Vector3 movePlayer = new(x: move.x, y: !allowGravity ? move.y : rb.velocity.y);
-        isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
 
         rb.velocity = moveMultiplier * movePlayer;
-        animator.SetBool("isMoving", isMoving);
         FlipSprite();
     }
 
@@ -187,15 +185,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator Dash()
+    public IEnumerator Dash()
     {
-        Vector2 move = DetermineControls();
         canDash = false;
         isDashing = true;
+        Vector2 move = DetermineControls();
         float dashMultiplier = dashForce * 10;
-        audioSource.PlayOneShot(dashSFX);
-        rb.velocity = new Vector2(move.x * dashMultiplier, move.y * dashMultiplier);
+        Vector2 dash = dashMultiplier * new Vector2(move.x, move.y);
+        rb.velocity = dash;
         animator.SetTrigger("Dash");
+        audioSource.PlayOneShot(dashSFX);
         dashBar.value = 0;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
