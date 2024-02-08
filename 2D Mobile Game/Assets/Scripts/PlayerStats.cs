@@ -70,7 +70,7 @@ public class PlayerStats : MonoBehaviour
             scoreText.text = $"Score: {score}";
             moneyText.text = $"Money: ${money}";
         }
-        
+
         seconds += Time.deltaTime;
 
         if (seconds >= 60)

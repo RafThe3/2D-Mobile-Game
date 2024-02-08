@@ -3588,11 +3588,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   canDash: 1
-  moveSpeed: 1
+  moveSpeed: 6
   jumpForce: 4.15
-  dashForce: 3.5
+  dashForce: 15
   dashCooldown: 1.7
-  dashTime: 0.1
+  dashTime: 0.12
   dashSFX: {fileID: 8300000, guid: 90fb91c5d9f18df4183363d36d921429, type: 3}
   dashBar: {fileID: 709041019}
   maxHealth: 100

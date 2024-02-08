@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     [Min(0), SerializeField] private float damageDelay = 1;
 
     [Header("Other")]
+    [SerializeField] private int scoreToGiveAfterDeath = 1;
     [SerializeField] private AudioClip hurtSFX;
 
     //Internal Variables
@@ -53,11 +54,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (canMove)
-        {
-            MoveEnemy();
-        }
-
         DisplayHealth();
 
         if (currentHealth <= 0)
@@ -70,6 +66,14 @@ public class Enemy : MonoBehaviour
         damageTimer += Time.deltaTime;
     }
 
+    private void FixedUpdate()
+    {
+        if (canMove)
+        {
+            MoveEnemy();
+        }
+    }
+
     //Movement
     private void MoveEnemy()
     {
@@ -77,7 +81,7 @@ public class Enemy : MonoBehaviour
         Vector3 playerPosition = player.transform.position;
         Vector3 playerPositionFromEnemy = playerPosition - transform.position;
         playerPositionFromEnemy.Normalize();
-        Vector3 moveEnemy = playerPositionFromEnemy * moveMultiplier;
+        Vector3 moveEnemy = moveMultiplier * playerPositionFromEnemy;
 
         rb.velocity = moveEnemy;
         FlipSprite();
@@ -126,7 +130,7 @@ public class Enemy : MonoBehaviour
         canMove = false;
         PlayerStats playerStats = FindObjectOfType<PlayerStats>();
         playerStats.AddKill();
-        playerStats.AddScore(20);
+        playerStats.AddScore(scoreToGiveAfterDeath);
         healthBar.gameObject.SetActive(false);
         Destroy(gameObject);
 
