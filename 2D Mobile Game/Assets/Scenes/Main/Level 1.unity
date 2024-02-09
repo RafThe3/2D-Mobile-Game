@@ -3625,7 +3625,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787132876}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -3783,7 +3783,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7787,7 +7787,6 @@ MonoBehaviour:
   timeText: {fileID: 631473446}
   startingMoney: 100
   maxMoney: 1000000
-  scoreToGive: 0
   lsKillsText: {fileID: 443447634}
   lsScoreText: {fileID: 1694391394}
   lsMoneyText: {fileID: 1741844171}
