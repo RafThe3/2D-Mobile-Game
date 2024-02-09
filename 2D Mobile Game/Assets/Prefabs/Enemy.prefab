@@ -147,12 +147,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d6aede96e1d7842a76570234a6edf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
   enemyChase: 2
   moveSpeed: 5
   chaseDistance: 10
   maxHealth: 100
-  enemyAttack: 1
+  enemyAttack: 2
   damageToDeal: 10
   damageDelay: 2
   bulletSpeed: 1

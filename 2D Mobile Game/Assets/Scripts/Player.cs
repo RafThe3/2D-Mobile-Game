@@ -267,7 +267,6 @@ public class Player : MonoBehaviour
         isHealing = false;
     }
 
-
     private void Die()
     {
         canMove = false;
