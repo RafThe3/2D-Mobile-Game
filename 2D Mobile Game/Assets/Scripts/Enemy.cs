@@ -84,22 +84,38 @@ public class Enemy : MonoBehaviour
         {
             MoveEnemy();
         }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
     }
 
     //Movement
     private void MoveEnemy()
     {
-        float moveMultiplier = 10 * moveSpeed;
-        Vector3 playerPosition = player.transform.position;
-        Vector3 playerPositionFromEnemy = playerPosition - transform.position;
+        float moveMultiplier = 100 * moveSpeed;
+        Vector3 playerPosition = player.transform.position - transform.position;
+        bool playerIsClose = playerPosition.magnitude < chaseDistance;
 
-        if (enemyChase == EnemyChase.Instantly || (enemyChase == EnemyChase.Proximity && playerPositionFromEnemy.magnitude < chaseDistance))
+        //Chases the player when hit and the player isn't close
+        if (!playerIsClose && currentHealth < maxHealth)
         {
-            playerPositionFromEnemy.Normalize();
-            Vector3 moveEnemy = moveMultiplier * playerPositionFromEnemy;
+            enemyChase = EnemyChase.Instantly;
+        }
+
+        if (enemyChase == EnemyChase.Instantly || (enemyChase == EnemyChase.Proximity && playerIsClose))
+        {
+            playerPosition.Normalize();
+            Vector3 moveEnemy = moveMultiplier * Time.fixedDeltaTime * playerPosition;
 
             rb.velocity = moveEnemy;
             FlipSprite();
+        }
+        else if (enemyChase == EnemyChase.Proximity && !playerIsClose)
+        {
+            rb.velocity = Vector2.zero;
+            return;
         }
     }
 
@@ -184,6 +200,11 @@ public class Enemy : MonoBehaviour
         {
             currentHealth = 0;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, chaseDistance);
     }
 
     private enum EnemyAttack { None, Melee, Shoot }

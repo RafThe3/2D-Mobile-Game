@@ -7683,7 +7683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   canDash: 1
-  moveSpeed: 1.2
+  moveSpeed: 6
   jumpForce: 4.15
   dashForce: 3.6
   dashCooldown: 1.7

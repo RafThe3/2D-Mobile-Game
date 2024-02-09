@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI timeText;
-    [Min(0), SerializeField] private int startingMoney = 0, maxMoney = 0, scoreToGive = 0;
+    [Min(0), SerializeField] private int startingMoney = 0, maxMoney = 0;
 
     [Header("Lose Screen")]
     [SerializeField] private TextMeshProUGUI lsKillsText;

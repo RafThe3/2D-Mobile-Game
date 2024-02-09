@@ -88,8 +88,42 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    private void FixedUpdate()
+    {
+        if (canMove && !isDashing)
+        { 
+            //Sets the move variable depending on the controls
+            Vector2 move = DetermineControls();
+            MovePlayer(move);
+
+            if (Input.GetButtonDown("Jump") && allowGravity)
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
+            {
+                StartCoroutine(Dash());
+            }
+        }
+
+        if (!canMove)
+        {
+            rb.velocity = Vector2.zero;
+        }
+    }
+
     private void Update()
     {
+        isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        FixHealthBugs();
+        UpdateUI();
+
+        if (isDashing)
+        {
+            return;
+        }
+
         if (dashBar.value < dashBar.maxValue && !isDashing)
         {
             dashBar.value += Time.deltaTime;
@@ -110,41 +144,16 @@ public class Player : MonoBehaviour
         {
             TakeDamage(10);
         }
-
-        FixHealthBugs();
-        UpdateUI();
-    }
-
-    private void FixedUpdate()
-    {
-        if (!isDashing && canMove)
-        {
-            //Sets the move variable depending on the controls
-            Vector2 move = DetermineControls();
-            MovePlayer(move);
-
-            isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
-            animator.SetBool("isMoving", isMoving);
-
-            if (Input.GetButtonDown("Jump") && allowGravity)
-            {
-                Jump();
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving)
-            {
-                StartCoroutine(Dash());
-            }
-        }
     }
 
     //Movement and Controls
     private void MovePlayer(Vector2 move)
     {
-        float moveMultiplier = moveSpeed * 10;
+        float moveMultiplier = moveSpeed * 100;
         Vector3 movePlayer = new(x: move.x, y: !allowGravity ? move.y : rb.velocity.y);
 
-        rb.velocity = moveMultiplier * movePlayer;
+        rb.velocity = moveMultiplier * Time.fixedDeltaTime * movePlayer;
+        animator.SetBool("isMoving", isMoving);
         FlipSprite();
     }
 

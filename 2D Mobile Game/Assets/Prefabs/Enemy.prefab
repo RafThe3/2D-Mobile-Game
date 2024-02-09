@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  enemyChase: 1
-  moveSpeed: 1
-  chaseDistance: 5
+  enemyChase: 2
+  moveSpeed: 5
+  chaseDistance: 10
   maxHealth: 100
   enemyAttack: 1
   damageToDeal: 10
