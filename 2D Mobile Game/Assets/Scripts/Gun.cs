@@ -37,7 +37,7 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
-        bulletPrefab.GetComponent<Bullet>().damage = damageToDeal;
+        bulletPrefab.GetComponent<PlayerBullet>().damage = damageToDeal;
         audioSource = Camera.main.GetComponent<AudioSource>();
     }
 

@@ -26,11 +26,11 @@ public class AudioRotation : MonoBehaviour
         bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
         if (isMoving)
         {
-            PlayNextAudio();
+            PlayNextAudio(audioClips);
         }
     }
 
-    private void PlayNextAudio()
+    public void PlayNextAudio(AudioClip[] audios)
     {
         songLength += Time.deltaTime;
 
@@ -48,7 +48,7 @@ public class AudioRotation : MonoBehaviour
             song = 0;
         }
 
-        audioSource.PlayOneShot(audioClips[song]);
+        audioSource.PlayOneShot(audios[song]);
         songLength = 0;
     }
 }

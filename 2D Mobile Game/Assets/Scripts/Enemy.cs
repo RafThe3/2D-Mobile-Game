@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private bool canMove = true;
     [SerializeField] private EnemyChase enemyChase = EnemyChase.None;
     [Min(0), SerializeField] private float moveSpeed = 1;
     [Min(0), SerializeField] private float chaseDistance = 1;
@@ -29,6 +28,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip shootSFX;
 
     //Internal Variables
+    private bool canMove = true;
     private int currentHealth = 0;
     private float damageTimer;
     private Slider healthBar;
@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private Vector3 healthBarScale;
+    private PlayerBullet bullet;
     //Game specific only - remove if unnecessary
     //private EnemyCounter enemyCounter;
     //
@@ -48,6 +49,11 @@ public class Enemy : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         damageTimer = damageDelay;
         healthBarScale = healthBar.transform.localScale;
+        if (enemyChase == EnemyChase.None)
+        {
+            canMove = false;
+        }
+        bullet.damage = damageToDeal;
     }
 
     private void Awake()
@@ -57,6 +63,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = Camera.main.GetComponent<AudioSource>();
         healthBar = GetComponentInChildren<Slider>();
+        bullet = bulletPrefab.GetComponent<PlayerBullet>();
     }
 
     private void Update()
@@ -98,13 +105,8 @@ public class Enemy : MonoBehaviour
         Vector3 playerPosition = player.transform.position - transform.position;
         bool playerIsClose = playerPosition.magnitude < chaseDistance;
 
-        //Chases the player when hit and the player isn't close
-        if (!playerIsClose && currentHealth < maxHealth)
-        {
-            enemyChase = EnemyChase.Instantly;
-        }
-
-        if (enemyChase == EnemyChase.Instantly || (enemyChase == EnemyChase.Proximity && playerIsClose))
+        //Chases player based on type of chase
+        if (enemyChase == EnemyChase.Instantly || (enemyChase == EnemyChase.Proximity && playerIsClose) || currentHealth < maxHealth)
         {
             playerPosition.Normalize();
             Vector3 moveEnemy = moveMultiplier * Time.fixedDeltaTime * playerPosition;
@@ -202,6 +204,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Other
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, chaseDistance);
