@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
             StartCoroutine(Heal(healAmount, healDelay));
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && attackTimer >= attackDelay)
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Attack();
         }
@@ -306,6 +306,11 @@ public class Player : MonoBehaviour
     // Attack
     public void Attack()
     {
+        if (attackTimer < attackDelay)
+        {
+            return;
+        }
+
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemy in enemies)

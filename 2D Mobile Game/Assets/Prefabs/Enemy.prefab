@@ -155,7 +155,7 @@ MonoBehaviour:
   attackDamageToDeal: 10
   attackDelay: 3
   gunDamageToDeal: 5
-  shootDelay: 3
+  shootDelay: 2
   bulletSpeed: 5
   bulletLifeTime: 3
   scoreToGiveAfterDeath: 20
