@@ -18,6 +18,15 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lsMoneyText;
     [SerializeField] private TextMeshProUGUI lsTimeText;
 
+    [Header("Win Screen")]
+    [SerializeField] private TextMeshProUGUI wsKillsText;
+    [SerializeField] private TextMeshProUGUI wsScoreText;
+    [SerializeField] private TextMeshProUGUI wsMoneyText;
+    [SerializeField] private TextMeshProUGUI wsTimeText;
+
+    [Header("Merchant UI")]
+    [SerializeField] private TextMeshProUGUI merchantMoneyText;
+
     //Internal Variables
     private int kills = 0, money = 0, score = 0;
     private float seconds = 0, minutes = 0, hours = 0;
@@ -63,12 +72,19 @@ public class PlayerStats : MonoBehaviour
             lsScoreText.text = $"{score}";
             lsMoneyText.text = $"${money}";
             lsTimeText.text = tempTime;
+
+            //wsKillsText.text = $"{kills}";
+            //wsScoreText.text = $"{score}";
+            //wsMoneyText.text = $"${money}";
+            //wsTimeText.text = tempTime;
+
+            merchantMoneyText.text = $"${money}";
         }
         else
         {
             killsText.text = $"Kills: {kills}";
             scoreText.text = $"Score: {score}";
-            moneyText.text = $"Money: ${money}";
+            moneyText.text = $"${money}";
         }
 
         seconds += Time.deltaTime;
@@ -99,6 +115,11 @@ public class PlayerStats : MonoBehaviour
         {
             this.money += money;
         }
+    }
+
+    public int GetMoney()
+    {
+        return money;
     }
 
     public void SubtractMoney(int money)

@@ -65,10 +65,8 @@ public class Enemy : MonoBehaviour
         attackTimer = attackDelay;
         shootTimer = shootDelay;
         healthBarScale = healthBar.transform.localScale;
-        if (enemyChase == EnemyChase.None)
-        {
-            canMove = false;
-        }
+        canMove = enemyChase != EnemyChase.None;
+        rb.bodyType = canMove ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
         bullet.damage = gunDamageToDeal;
     }
 

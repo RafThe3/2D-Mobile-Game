@@ -306,7 +306,7 @@ public class Player : MonoBehaviour
     // Attack
     public void Attack()
     {
-        if (attackTimer < attackDelay)
+        if (attackTimer < attackDelay || !canAttack)
         {
             return;
         }
