@@ -126,6 +126,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        attackTimer += Time.deltaTime;
         isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
         FixHealthBugs();
         UpdateUI();
@@ -150,15 +151,9 @@ public class Player : MonoBehaviour
             StartCoroutine(Heal(healAmount, healDelay));
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Attack();
-        }
-
-        // Test
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TakeDamage(10);
         }
     }
 
@@ -311,6 +306,11 @@ public class Player : MonoBehaviour
     // Attack
     public void Attack()
     {
+        if (attackTimer < attackDelay)
+        {
+            return;
+        }
+
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemy in enemies)
@@ -340,5 +340,10 @@ public class Player : MonoBehaviour
     public bool AllowsKeyControls()
     {
         return allowKeyControls;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackDistance);
     }
 }

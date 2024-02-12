@@ -33,7 +33,7 @@ public class Gun : MonoBehaviour
     private float shootTimer;
     private int currentAmmo, reserveAmmo;
     private AudioSource audioSource;
-    private bool isReloading;
+    private bool isReloading, isShooting;
 
     private void Awake()
     {

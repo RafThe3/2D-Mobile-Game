@@ -16,8 +16,12 @@ public class Enemy : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private EnemyAttack enemyAttack = EnemyAttack.None;
-    [Min(0), SerializeField] private int damageToDeal = 1;
-    [Min(0), SerializeField] private float damageDelay = 1;
+    [Min(0), SerializeField] private int attackDamageToDeal = 1;
+    [Min(0), SerializeField] private float attackDelay = 1;
+
+    [Header("Gun")]
+    [Min(0), SerializeField] private int gunDamageToDeal = 1;
+    [Min(0), SerializeField] private float shootDelay = 1;
     [Min(0), SerializeField] private float bulletSpeed = 1;
     [Min(0), SerializeField] private float bulletLifeTime = 1;
 
@@ -30,31 +34,17 @@ public class Enemy : MonoBehaviour
     //Internal Variables
     private bool canMove = true;
     private int currentHealth = 0;
-    private float damageTimer;
+    private float attackTimer, shootTimer;
     private Slider healthBar;
     private Player player;
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private Vector3 healthBarScale;
-    private PlayerBullet bullet;
+    private EnemyBullet bullet;
     //Game specific only - remove if unnecessary
     //private EnemyCounter enemyCounter;
     //
 
-    private void Start()
-    {
-        currentHealth = maxHealth;
-        healthBar.maxValue = maxHealth;
-        healthBar.value = healthBar.maxValue;
-        healthBar.gameObject.SetActive(false);
-        damageTimer = damageDelay;
-        healthBarScale = healthBar.transform.localScale;
-        if (enemyChase == EnemyChase.None)
-        {
-            canMove = false;
-        }
-        bullet.damage = damageToDeal;
-    }
 
     private void Awake()
     {
@@ -63,7 +53,23 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = Camera.main.GetComponent<AudioSource>();
         healthBar = GetComponentInChildren<Slider>();
-        bullet = bulletPrefab.GetComponent<PlayerBullet>();
+        bullet = bulletPrefab.GetComponent<EnemyBullet>();
+    }
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = healthBar.maxValue;
+        healthBar.gameObject.SetActive(false);
+        attackTimer = attackDelay;
+        shootTimer = shootDelay;
+        healthBarScale = healthBar.transform.localScale;
+        if (enemyChase == EnemyChase.None)
+        {
+            canMove = false;
+        }
+        bullet.damage = gunDamageToDeal;
     }
 
     private void Update()
@@ -77,7 +83,8 @@ public class Enemy : MonoBehaviour
 
         FixHealthBugs();
 
-        damageTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
+        shootTimer += Time.deltaTime;
 
         if (enemyAttack == EnemyAttack.Shoot)
         {
@@ -153,10 +160,10 @@ public class Enemy : MonoBehaviour
         audioSource.PlayOneShot(hurtSFX);
     }
 
-    private void DealDamage(int damage)
+    private void Attack(int damage)
     {
         player.TakeDamage(damage);
-        damageTimer = 0;
+        attackTimer = 0;
     }
 
     private void Die()
@@ -174,25 +181,28 @@ public class Enemy : MonoBehaviour
 
     public void Shoot()
     {
-        if (damageTimer >= damageDelay)
+        float moveMultiplier = 10 * bulletSpeed;
+        Vector3 playerPosition = player.transform.position - transform.position;
+        bool playerIsClose = playerPosition.magnitude < chaseDistance;
+
+        if (shootTimer >= shootDelay && (enemyChase == EnemyChase.Instantly
+                                         || (enemyChase == EnemyChase.Proximity && playerIsClose)
+                                         || currentHealth < maxHealth))
         {
+            playerPosition.Normalize();
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-            Vector3 shootDir = playerPosition - transform.position;
-            shootDir.Normalize();
-            float moveMultiplier = 10 * bulletSpeed;
-            bullet.GetComponent<Rigidbody2D>().velocity = moveMultiplier * shootDir;
+            bullet.GetComponent<Rigidbody2D>().velocity = moveMultiplier * playerPosition;
             audioSource.PlayOneShot(shootSFX);
             Destroy(bullet, bulletLifeTime);
-            damageTimer = 0;
+            shootTimer = 0;
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && damageTimer >= damageDelay && enemyAttack == EnemyAttack.Melee)
+        if (collision.gameObject.CompareTag("Player") && attackTimer >= attackDelay && enemyAttack == EnemyAttack.Melee)
         {
-            DealDamage(damageToDeal);
+            Attack(attackDamageToDeal);
         }
     }
 

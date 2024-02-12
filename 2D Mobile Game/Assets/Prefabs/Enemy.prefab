@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2839481786963985574}
   - component: {fileID: 2839481786963985561}
   - component: {fileID: 2839481786963985560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -151,15 +151,17 @@ MonoBehaviour:
   moveSpeed: 5
   chaseDistance: 10
   maxHealth: 100
-  enemyAttack: 1
-  damageToDeal: 10
-  damageDelay: 2
-  bulletSpeed: 1
-  bulletLifeTime: 1
+  enemyAttack: 2
+  attackDamageToDeal: 10
+  attackDelay: 3
+  gunDamageToDeal: 5
+  shootDelay: 2
+  bulletSpeed: 5
+  bulletLifeTime: 3
   scoreToGiveAfterDeath: 20
   hurtSFX: {fileID: 0}
-  bulletPrefab: {fileID: 8083596436272375505, guid: 924e6ee6558471e46a2e50b9e12888e8, type: 3}
-  shootSFX: {fileID: 0}
+  bulletPrefab: {fileID: 8083596436272375505, guid: 9f68792fb88045842805e2d1ab4d8383, type: 3}
+  shootSFX: {fileID: 8300000, guid: 5f65f7a864d7742fda4f10edfde922d2, type: 3}
 --- !u!1 &3057828453310320559
 GameObject:
   m_ObjectHideFlags: 0
