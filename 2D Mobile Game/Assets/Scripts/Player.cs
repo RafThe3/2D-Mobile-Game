@@ -126,6 +126,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        attackTimer += Time.deltaTime;
         isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
         FixHealthBugs();
         UpdateUI();
@@ -150,15 +151,9 @@ public class Player : MonoBehaviour
             StartCoroutine(Heal(healAmount, healDelay));
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && attackTimer >= attackDelay)
         {
             Attack();
-        }
-
-        // Test
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TakeDamage(10);
         }
     }
 
@@ -340,5 +335,10 @@ public class Player : MonoBehaviour
     public bool AllowsKeyControls()
     {
         return allowKeyControls;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackDistance);
     }
 }
