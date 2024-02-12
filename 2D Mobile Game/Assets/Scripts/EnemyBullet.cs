@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    [HideInInspector] public int damage;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,12 @@ public class EnemyBullet : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void DamagePlayer(Collider2D collision)
+    {
+        Player player = collision.gameObject.GetComponent<Player>();
+        player.TakeDamage(damage);
+        Destroy(gameObject);
     }
 }

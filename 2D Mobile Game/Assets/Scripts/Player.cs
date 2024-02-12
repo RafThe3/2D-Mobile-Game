@@ -30,23 +30,34 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip healSFX, hurtSFX;
     [SerializeField] private Canvas loseScreen;
 
+    [Header("Attacking")]
+    [SerializeField] private bool canAttack = true;
+    [SerializeField] private float attackDistance = 1;
+    [SerializeField] private float attackDelay = 1;
+    [SerializeField] private int damageAmount = 1;
+    [SerializeField] private GameObject attackPoint;
+    [SerializeField] private AudioClip attackSFX;
+
     [Header("Controls")]
     [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
-    //Internal Variables
+    // Internal Variables
 
-    //Movement
+    // Movement
     private bool isDashing = false, isMoving = false;
 
-    //Health
+    // Health
     private int healthPacks = 0;
     private int currentHealth = 0;
     private AudioSource audioSource;
     private bool isHealing;
 
-    //Other
+    // Attacking
+    private float attackTimer;
+
+    // Other
     private bool allowGravity = false;
     private Collider2D cldr;
     private Animator animator;
@@ -63,7 +74,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //Movement and Controls
+        // Movement and Controls
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
@@ -71,7 +82,7 @@ public class Player : MonoBehaviour
         dashBar.value = dashBar.maxValue;
         dashBarScale = dashBar.transform.localScale;
 
-        //Health
+        // Health
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
@@ -82,8 +93,8 @@ public class Player : MonoBehaviour
             maxHealthPacks = startingHealthPacks;
         }
 
-        //Other
-        //Game specific - remove if unnecessary
+        // Other
+        // Game specific - remove if unnecessary
         loseScreen.enabled = false;
         Time.timeScale = 1;
     }
@@ -92,7 +103,7 @@ public class Player : MonoBehaviour
     {
         if (canMove && !isDashing)
         { 
-            //Sets the move variable depending on the controls
+            // Sets the move variable depending on the controls
             Vector2 move = DetermineControls();
             MovePlayer(move);
 
@@ -139,14 +150,19 @@ public class Player : MonoBehaviour
             StartCoroutine(Heal(healAmount, healDelay));
         }
 
-        //Test
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Attack();
+        }
+
+        // Test
         if (Input.GetKeyDown(KeyCode.Q))
         {
             TakeDamage(10);
         }
     }
 
-    //Movement and Controls
+    // Movement and Controls
     private void MovePlayer(Vector2 move)
     {
         float moveMultiplier = moveSpeed * 100;
@@ -219,7 +235,7 @@ public class Player : MonoBehaviour
         moveSpeed = tempMoveSpeed;
     }
 
-    //Mobile Controls - Movement and Controls
+    // Mobile Controls - Movement and Controls
     public void ButtonDash()
     {
         bool isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
@@ -229,7 +245,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Health
+    // Health
     private void FixHealthBugs()
     {
         if (currentHealth < 0)
@@ -283,7 +299,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Mobile Controls - Health
+    // Mobile Controls - Health
     public void ButtonHeal()
     {
         if (!isHealing)
@@ -292,7 +308,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Other
+    // Attack
+    public void Attack()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackDistance, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider2D enemy in enemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(damageAmount);
+            audioSource.PlayOneShot(attackSFX);
+        }
+
+        animator.SetTrigger("Attack");
+        attackTimer = 0;
+    }
+
+    // Other
     private void UpdateUI()
     {
         healthPacksText.text = $"Health Packs: {healthPacks}";

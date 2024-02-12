@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     [HideInInspector] public int damage;
-    private ObjectToAttack objectToAttack = ObjectToAttack.None;
 
     private Rigidbody2D rb;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && objectToAttack == ObjectToAttack.Enemy)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             DamageEnemy(collision);
         }
@@ -43,18 +42,4 @@ public class Bullet : MonoBehaviour
         enemy.TakeDamage(damage);
         Destroy(gameObject);
     }
-
-    private void DamagePlayer(Collider2D collision)
-    {
-        Player player = collision.gameObject.GetComponent<Player>();
-        player.TakeDamage(damage);
-        Destroy(gameObject);
-    }
-
-    public void SetObjectToAttack(ObjectToAttack obj)
-    {
-        objectToAttack = obj;
-    }
-
-    public enum ObjectToAttack { None, Player, Enemy }
 }

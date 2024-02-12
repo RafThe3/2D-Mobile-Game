@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private Vector3 healthBarScale;
-    private Bullet bullet;
+    private PlayerBullet bullet;
     //Game specific only - remove if unnecessary
     //private EnemyCounter enemyCounter;
     //
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = Camera.main.GetComponent<AudioSource>();
         healthBar = GetComponentInChildren<Slider>();
-        bullet = bulletPrefab.GetComponent<Bullet>();
+        bullet = bulletPrefab.GetComponent<PlayerBullet>();
     }
 
     private void Update()
@@ -81,7 +81,6 @@ public class Enemy : MonoBehaviour
 
         if (enemyAttack == EnemyAttack.Shoot)
         {
-            bullet.SetObjectToAttack(Bullet.ObjectToAttack.Player);
             Shoot();
         }
     }

@@ -151,7 +151,7 @@ MonoBehaviour:
   moveSpeed: 5
   chaseDistance: 10
   maxHealth: 100
-  enemyAttack: 2
+  enemyAttack: 1
   damageToDeal: 10
   damageDelay: 2
   bulletSpeed: 1
