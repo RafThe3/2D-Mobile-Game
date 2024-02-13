@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip attackSFX;
 
     [Header("Controls")]
-    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
+    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] public bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
