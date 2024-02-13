@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private int scoreToGiveAfterDeath = 1;
+    [SerializeField] private int moneyToGiveAfterDeath = 1;
     [SerializeField] private AudioClip hurtSFX;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private AudioClip shootSFX;
@@ -170,6 +171,7 @@ public class Enemy : MonoBehaviour
         PlayerStats playerStats = FindObjectOfType<PlayerStats>();
         playerStats.AddKill();
         playerStats.AddScore(scoreToGiveAfterDeath);
+        playerStats.AddMoney(moneyToGiveAfterDeath);
         healthBar.gameObject.SetActive(false);
         Destroy(gameObject);
 
