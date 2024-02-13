@@ -209,4 +209,16 @@ public class Gun : MonoBehaviour
             reserveAmmo += ammo;
         }
     }
+
+    public void SubtractReloadSpeed(float speed)
+    {
+        reloadInterval -= speed;
+        reloadBar.maxValue = reloadInterval;
+        reloadBar.value = reloadBar.maxValue;
+    }
+
+    public void AddShootSpeed(float speed)
+    {
+        shootDelay -= speed;
+    }
 }
