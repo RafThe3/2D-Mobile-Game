@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && !isHealing)
         {
-            StartCoroutine(Heal(healAmount, healDelay));
+            StartCoroutine(Heal(healAmount));
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -263,7 +263,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator Heal(int health, float healInterval)
+    public IEnumerator Heal(int health)
     {
         isHealing = true;
 
@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(healSFX);
         }
 
-        yield return new WaitForSeconds(healInterval);
+        yield return new WaitForSeconds(healDelay);
         isHealing = false;
     }
 
@@ -299,7 +299,7 @@ public class Player : MonoBehaviour
     {
         if (!isHealing)
         {
-            StartCoroutine(Heal(healAmount, healDelay));
+            StartCoroutine(Heal(healAmount));
         }
     }
 
@@ -345,5 +345,17 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackDistance);
+    }
+
+    public void SubtractDashInterval(float speed)
+    {
+        dashCooldown -= speed;
+        dashBar.maxValue = dashCooldown;
+        dashBar.value = dashBar.maxValue;
+    }
+
+    public void AddSpeed(float speed)
+    {
+        moveSpeed += speed;
     }
 }

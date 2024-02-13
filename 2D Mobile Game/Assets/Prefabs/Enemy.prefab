@@ -159,6 +159,7 @@ MonoBehaviour:
   bulletSpeed: 5
   bulletLifeTime: 3
   scoreToGiveAfterDeath: 20
+  moneyToGiveAfterDeath: 150
   hurtSFX: {fileID: 0}
   bulletPrefab: {fileID: 8083596436272375505, guid: 9f68792fb88045842805e2d1ab4d8383, type: 3}
   shootSFX: {fileID: 8300000, guid: 5f65f7a864d7742fda4f10edfde922d2, type: 3}

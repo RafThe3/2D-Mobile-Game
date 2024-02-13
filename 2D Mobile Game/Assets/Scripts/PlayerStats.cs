@@ -31,6 +31,10 @@ public class PlayerStats : MonoBehaviour
     private int kills = 0, money = 0, score = 0;
     private float seconds = 0, minutes = 0, hours = 0;
     private string tempTime = "";
+    private MerchantUI merchant;
+    private Player player;
+    private Gun gun;
+    private const int maxInt = 10000;
 
     // Start is called before the first frame update
     private void Start()
@@ -41,6 +45,13 @@ public class PlayerStats : MonoBehaviour
         {
             maxMoney = startingMoney;
         }
+    }
+
+    private void Awake()
+    {
+        merchant = FindObjectOfType<MerchantUI>();
+        player = FindObjectOfType<Player>();
+        gun = FindObjectOfType<Gun>();
     }
 
     // Update is called once per frame
@@ -54,6 +65,11 @@ public class PlayerStats : MonoBehaviour
         if (Input.GetKey(KeyCode.N))
         {
             SubtractMoney(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SubtractMoney(68);
         }
 
         UpdateText();
@@ -124,7 +140,7 @@ public class PlayerStats : MonoBehaviour
 
     public void SubtractMoney(int money)
     {
-        if (money > 0)
+        if (money > 0 && this.money - money >= 0)
         {
             this.money -= money;
         }
@@ -133,5 +149,49 @@ public class PlayerStats : MonoBehaviour
     public void AddScore(int score)
     {
         this.score += score;
+    }
+
+    public void GiveReward(string reward)
+    {
+        if (money - merchant.GetRewardPrice(1) >= 0 && reward == "Reload")
+        {
+            FastReload();
+            SubtractMoney(merchant.GetRewardPrice(1));
+        }
+        else if (money - merchant.GetRewardPrice(2) >= 0 && reward == "Dash")
+        {
+            FastDash();
+            SubtractMoney(merchant.GetRewardPrice(2));
+        }
+        else if (money - merchant.GetRewardPrice(3) >= 0 && reward == "Shoot")
+        {
+            FastShoot();
+            SubtractMoney(merchant.GetRewardPrice(3));
+        }
+        else if (money - merchant.GetRewardPrice(4) >= 0 && reward == "Walk")
+        {
+            FastWalk();
+            SubtractMoney(merchant.GetRewardPrice(4));
+        }
+    }
+
+    private void FastReload()
+    {
+        gun.SubtractReloadSpeed(0.025f);
+    }
+
+    private void FastDash()
+    {
+        player.SubtractDashInterval(0.025f);
+    }
+
+    private void FastWalk()
+    {
+        player.AddSpeed(2);
+    }
+
+    private void FastShoot()
+    {
+        gun.AddShootSpeed(0.025f);
     }
 }
