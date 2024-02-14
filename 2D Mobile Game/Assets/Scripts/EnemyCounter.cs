@@ -20,8 +20,6 @@ public class EnemyCounter : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //enemyCounterText.text = $"Enemies Remaining: {enemiesRemaining}";
-
         Debug.Log(enemiesRemaining);
 
         if (enemiesRemaining <= 0)
