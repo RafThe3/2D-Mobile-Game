@@ -1151,10 +1151,10 @@ MonoBehaviour:
   fastDashText: {fileID: 1256175635}
   fastShootText: {fileID: 315343621}
   fastRunText: {fileID: 1494231821}
-  fastReloadPrice: 2500
-  fastDashPrice: 3000
-  fastShootPrice: 5000
-  fastRunPrice: 2700
+  fastReloadPrice: 2000
+  fastDashPrice: 2300
+  fastShootPrice: 3000
+  fastRunPrice: 2500
 --- !u!1 &128231315
 GameObject:
   m_ObjectHideFlags: 0
@@ -10177,7 +10177,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
           m_FloatArgument: 0
-          m_StringArgument: Walk
+          m_StringArgument: Run
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1621232551
@@ -12409,7 +12409,7 @@ MonoBehaviour:
   damageAmount: 10
   attackPoint: {fileID: 335690870}
   attackSFX: {fileID: 0}
-  allowKeyControls: 0
+  allowKeyControls: 1
   joystick: {fileID: 1036821058}
   mobileControls: {fileID: 1532513686}
 --- !u!4 &1970648851
@@ -12495,7 +12495,7 @@ MonoBehaviour:
   scoreText: {fileID: 1580041640}
   moneyText: {fileID: 486246317}
   timeText: {fileID: 1543144050}
-  startingMoney: 100
+  startingMoney: 0
   maxMoney: 1000000
   lsKillsText: {fileID: 1762469007}
   lsScoreText: {fileID: 990934999}

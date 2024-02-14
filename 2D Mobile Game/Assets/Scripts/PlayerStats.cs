@@ -39,7 +39,7 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        money = startingMoney;
+        money = PlayerPrefs.GetInt("Money");
 
         if (maxMoney == 0)
         {
@@ -57,6 +57,8 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        PlayerPrefs.SetInt("Money", money);
+
         //Test
         if (Input.GetKey(KeyCode.M))
         {
@@ -157,21 +159,25 @@ public class PlayerStats : MonoBehaviour
         {
             FastReload();
             SubtractMoney(merchant.GetRewardPrice(1));
+            merchant.AddRewardPrice("Reload", merchant.GetRewardPrice(1) / 2);
         }
         else if (money - merchant.GetRewardPrice(2) >= 0 && reward == "Dash")
         {
             FastDash();
             SubtractMoney(merchant.GetRewardPrice(2));
+            merchant.AddRewardPrice("Dash", merchant.GetRewardPrice(2) / 2);
         }
         else if (money - merchant.GetRewardPrice(3) >= 0 && reward == "Shoot")
         {
             FastShoot();
             SubtractMoney(merchant.GetRewardPrice(3));
+            merchant.AddRewardPrice("Shoot", merchant.GetRewardPrice(3) / 2);
         }
-        else if (money - merchant.GetRewardPrice(4) >= 0 && reward == "Walk")
+        else if (money - merchant.GetRewardPrice(4) >= 0 && reward == "Run")
         {
             FastWalk();
             SubtractMoney(merchant.GetRewardPrice(4));
+            merchant.AddRewardPrice("Run", merchant.GetRewardPrice(4) / 2);
         }
     }
 

@@ -19,10 +19,23 @@ public class MerchantUI : MonoBehaviour
     private void Start()
     {
         merchantUI.enabled = false;
-        fastDashText.text = $"${fastDashPrice}";
-        fastReloadText.text = $"${fastReloadPrice}";
-        fastRunText.text = $"${fastRunPrice}";
-        fastShootText.text = $"${fastShootPrice}";
+        fastDashPrice = PlayerPrefs.GetInt("Dash");
+        fastReloadPrice = PlayerPrefs.GetInt("Reload");
+        fastRunPrice = PlayerPrefs.GetInt("Run");
+        fastShootPrice = PlayerPrefs.GetInt("Shoot");
+    }
+
+    private void Update()
+    {
+        PlayerPrefs.SetInt("Reload", fastReloadPrice);
+        PlayerPrefs.SetInt("Dash", fastDashPrice);
+        PlayerPrefs.SetInt("Shoot", fastShootPrice);
+        PlayerPrefs.SetInt("Run", fastRunPrice);
+
+        fastDashText.text = $"${PlayerPrefs.GetInt("Dash")}";
+        fastReloadText.text = $"${PlayerPrefs.GetInt("Reload")}";
+        fastRunText.text = $"${PlayerPrefs.GetInt("Run")}";
+        fastShootText.text = $"${PlayerPrefs.GetInt("Shoot")}";
     }
 
     public void OpenUI()
@@ -36,7 +49,11 @@ public class MerchantUI : MonoBehaviour
         merchantUI.enabled = false;
         Time.timeScale = 1;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="reward">1 - reload, 2 - dash, 3 - shoot, 4 - run</param>
+    /// <returns></returns>
     public int GetRewardPrice(int reward)
     {
         if (reward == 1)
@@ -58,6 +75,46 @@ public class MerchantUI : MonoBehaviour
         else
         {
             return 0;
+        }
+    }
+
+    public void AddRewardPrice(string reward, int price)
+    {
+        if (reward == "Reload")
+        {
+            fastReloadPrice += price;
+        }
+        else if (reward == "Shoot")
+        {
+            fastShootPrice += price;
+        }
+        else if (reward == "Run")
+        {
+            fastRunPrice += price;
+        }
+        else if (reward == "Dash")
+        {
+            fastDashPrice += price;
+        }
+    }
+
+    public void SetRewardPrice(string reward, int price)
+    {
+        if (reward == "Reload")
+        {
+            fastReloadPrice = price;
+        }
+        else if (reward == "Shoot")
+        {
+            fastShootPrice = price;
+        }
+        else if (reward == "Run")
+        {
+            fastRunPrice = price;
+        }
+        else if (reward == "Dash")
+        {
+            fastDashPrice = price;
         }
     }
 }

@@ -59,6 +59,20 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.GetInt("Difficulty") == 2)
+        {
+            maxHealth *= 2;
+            gunDamageToDeal *= 2;
+            attackDamageToDeal *= 2;
+            moneyToGiveAfterDeath *= 2;
+        }
+        else if (PlayerPrefs.GetInt("Difficulty") == 3)
+        {
+            maxHealth *= 3;
+            gunDamageToDeal *= 3;
+            attackDamageToDeal *= 3;
+            moneyToGiveAfterDeath *= 3;
+        }
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = healthBar.maxValue;
@@ -69,6 +83,7 @@ public class Enemy : MonoBehaviour
         canMove = enemyChase != EnemyChase.None;
         rb.bodyType = canMove ? RigidbodyType2D.Dynamic : RigidbodyType2D.Static;
         bullet.damage = gunDamageToDeal;
+        Debug.Log(maxHealth);
     }
 
     private void Update()
@@ -89,6 +104,7 @@ public class Enemy : MonoBehaviour
         {
             Shoot();
         }
+
     }
 
     private void FixedUpdate()
