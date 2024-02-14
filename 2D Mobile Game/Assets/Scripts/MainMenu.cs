@@ -16,13 +16,14 @@ public class MainMenu : MonoBehaviour
     private void Update()
     {
         UpdateDifficultyText();
+        PlayerPrefs.SetInt("Difficulty", difficulty);
     }
 
     private void UpdateDifficultyText()
     {
-        difficultyText.text = difficulty == 1 ? "Change Difficulty - Easy"
-                    : difficulty == 2 ? "Change Difficulty - Normal"
-                    : "Change Difficulty - Hard";
+        difficultyText.text = difficulty == 1 ? "Easy"
+                    : difficulty == 2 ? "Normal"
+                    : "Hard";
     }
 
     public void ExitGame()
@@ -32,8 +33,14 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(nextSceneIndex);
+        //int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        //SceneManager.LoadScene(nextSceneIndex);
+        SceneManager.LoadScene("Raf");
+        PlayerPrefs.SetInt("Money", 0);
+        PlayerPrefs.SetInt("Dash", 2300);
+        PlayerPrefs.SetInt("Reload", 2000);
+        PlayerPrefs.SetInt("Shoot", 3000);
+        PlayerPrefs.SetInt("Run", 2500);
     }
     public void ChangeDifficulty()
     {
@@ -42,7 +49,6 @@ public class MainMenu : MonoBehaviour
         {
             difficulty = 1;
         }
-        PlayerPrefs.SetInt("Difficulty", difficulty);
         Debug.Log(PlayerPrefs.GetInt("Difficulty"));
     }
 }
