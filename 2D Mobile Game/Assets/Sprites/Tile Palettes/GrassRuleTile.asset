@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Name: GrassRuleTile
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: -1896274021, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: -948481400, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -1634701801, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1975258178, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -456352895, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -2115531670, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1124219805, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1494460338, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1355957129, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -81979339, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 838408326, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1604862547, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 724136080, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 151336906, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -1192966814, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 809405556, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -963566843, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -878025179, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 2131654391, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -704941410, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 318405621, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -877979551, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 1659095295, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -405766133, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: 896275521, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    - {fileID: -1964290240, guid: 9e2e7665a63c89c41b63dc466477dcfd, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.6
+    m_Output: 1
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 
+    m_NeighborPositions:
+    - {x: -1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    m_RuleTransform: 0
