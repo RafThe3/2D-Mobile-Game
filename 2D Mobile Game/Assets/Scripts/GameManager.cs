@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    private void Update()
+    public void QuitGame()
     {
-        DontDestroyOnLoad(gameObject);
+        Debug.Log("Quitting");
+        Application.Quit();
     }
 }
