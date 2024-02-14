@@ -43,13 +43,13 @@ public class Enemy : MonoBehaviour
     private Vector3 healthBarScale;
     private EnemyBullet bullet;
     //Game specific only - remove if unnecessary
-    //private EnemyCounter enemyCounter;
-    //
+    private EnemyCounter enemyCounter;
+    
 
 
     private void Awake()
     {
-        //enemyCounter = FindObjectOfType<EnemyCounter>();
+        enemyCounter = FindObjectOfType<EnemyCounter>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = Camera.main.GetComponent<AudioSource>();
@@ -104,7 +104,6 @@ public class Enemy : MonoBehaviour
         {
             Shoot();
         }
-
     }
 
     private void FixedUpdate()
@@ -192,7 +191,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
 
         //Game specific only - remove if unnecessary
-        //enemyCounter.enemiesRemaining--;
+        enemyCounter.enemiesRemaining--;
     }
 
     public void Shoot()

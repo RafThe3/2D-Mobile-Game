@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class EnemyCounter : MonoBehaviour
 {
     [HideInInspector] public int enemiesToElim, enemiesRemaining;
-    [SerializeField] private int sceneToLoad;
     [SerializeField] private Canvas winScreen;
     [SerializeField] private TMPro.TextMeshProUGUI enemyCounterText;
 
@@ -21,7 +20,9 @@ public class EnemyCounter : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        enemyCounterText.text = $"Enemies Remaining: {enemiesRemaining}";
+        //enemyCounterText.text = $"Enemies Remaining: {enemiesRemaining}";
+
+        Debug.Log(enemiesRemaining);
 
         if (enemiesRemaining <= 0)
         {

@@ -10,20 +10,20 @@ public class Spawner : MonoBehaviour
     [Min(0), SerializeField] private bool endlessSpawn = false;
 
     //Game specific only - remove if unnecessary
-    //private EnemyCounter enemyCounter;
-    //
+    private EnemyCounter enemyCounter;
 
     //Internal Variables
     private float spawnTimer;
     private int objectsSpawned;
-    //
 
     private void Awake()
     {
         //Game specific only - remove if unnecessary
-        //enemyCounter = FindObjectOfType<EnemyCounter>();
-        //enemyCounter.enemiesToElim = numberOfEnemies;
-        //
+        enemyCounter = FindObjectOfType<EnemyCounter>();
+        if (prefabs[0].CompareTag("Enemy"))
+        {
+            enemyCounter.enemiesToElim = numberOfObjects;
+        }
     }
 
     private void Update()
