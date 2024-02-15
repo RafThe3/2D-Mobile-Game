@@ -148,8 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyChase: 1
-  moveSpeed: 5
+  moveSpeed: 7
   chaseDistance: 10
+  shootDistance: 1
   maxHealth: 50
   enemyAttack: 1
   attackDamageToDeal: 5

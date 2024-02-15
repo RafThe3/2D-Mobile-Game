@@ -198,6 +198,6 @@ public class PlayerStats : MonoBehaviour
 
     private void FastShoot()
     {
-        gun.AddShootSpeed(0.025f);
+        gun.AddShootSpeed(0.02f);
     }
 }

@@ -34,15 +34,20 @@ public class Gun : MonoBehaviour
     private int currentAmmo, reserveAmmo;
     private AudioSource audioSource;
     private bool isReloading, isShooting;
+    private Animator animator;
+    private Player player;
 
     private void Awake()
     {
         bulletPrefab.GetComponent<PlayerBullet>().damage = damageToDeal;
         audioSource = Camera.main.GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
     }
 
     private void Start()
     {
+        shootDelay = PlayerPrefs.GetFloat("ShootSpeed");
         shootTimer = shootDelay;
         currentAmmo = startingAmmo;
         reserveAmmo = (startingAmmo * startingRounds) - startingAmmo;
@@ -60,18 +65,22 @@ public class Gun : MonoBehaviour
         FixAmmoBugs();
         UpdateUI();
 
-        Debug.Log($"Burh: {reloadInterval}");
-
         shootTimer += Time.deltaTime;
 
         PlayerPrefs.SetFloat("ReloadSpeed", reloadInterval);
+        PlayerPrefs.SetFloat("ShootSpeed", shootDelay);
+        Debug.Log($"Reload: {reloadInterval}");
+        Debug.Log($"Shoot: {shootDelay}");
+
+        animator.SetBool("isShooting", isShooting);
 
         if (canShoot)
         {
-            if (FindObjectOfType<Player>().AllowsKeyControls())
+            if (player.AllowsKeyControls())
             {
-                bool isShooting = Input.GetButtonDown("Fire1") && !automaticFire || Input.GetButton("Fire1") && automaticFire;
-                if (isShooting && shootTimer >= shootDelay && !isReloading)
+                bool isMouseShooting = (Input.GetButtonDown("Fire1") && !automaticFire) || (Input.GetButton("Fire1") && automaticFire);
+                isShooting = isMouseShooting;
+                if (isMouseShooting && shootTimer >= shootDelay && !isReloading)
                 {
                     Shoot();
                 }
@@ -184,6 +193,7 @@ public class Gun : MonoBehaviour
         aim.x = aimingJoystick.Horizontal;
         aim.y = aimingJoystick.Vertical;
         bool isAiming = Mathf.Abs(aim.x) > 0 && Mathf.Abs(aim.y) > 0;
+        isShooting = isAiming;
 
         if (currentAmmo > 0 && isAiming && !isReloading)
         {
@@ -197,7 +207,7 @@ public class Gun : MonoBehaviour
             currentAmmo--;
             shootTimer = 0;
         }
-    }
+    }    
 
     public void ButtonReload()
     {
