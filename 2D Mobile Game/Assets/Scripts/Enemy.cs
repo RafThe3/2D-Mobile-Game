@@ -66,7 +66,6 @@ public class Enemy : MonoBehaviour
             gunDamageToDeal *= 2;
             attackDamageToDeal *= 2;
             moneyToGiveAfterDeath *= 2;
-            moveSpeed *= 2;
             shootDelay /= 2;
         }
         else if (PlayerPrefs.GetInt("Difficulty") == 3)
@@ -75,7 +74,6 @@ public class Enemy : MonoBehaviour
             gunDamageToDeal *= 3;
             attackDamageToDeal *= 3;
             moneyToGiveAfterDeath *= 3;
-            moveSpeed *= 3;
             shootDelay /= 3;
         }
         currentHealth = maxHealth;

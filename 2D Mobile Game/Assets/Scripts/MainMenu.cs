@@ -41,6 +41,9 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("Shoot", 3000);
         PlayerPrefs.SetInt("Run", 2500);
         PlayerPrefs.SetFloat("ReloadSpeed", 0.8f);
+        PlayerPrefs.SetFloat("ShootSpeed", 0.125f);
+        PlayerPrefs.SetFloat("DashCooldown", 1.7f);
+        PlayerPrefs.SetFloat("MoveSpeed", 8);
     }
     public void ChangeDifficulty()
     {

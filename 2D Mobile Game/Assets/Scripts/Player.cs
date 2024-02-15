@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip attackSFX;
 
     [Header("Controls")]
-    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] public bool allowKeyControls = true;
+    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
@@ -78,6 +78,10 @@ public class Player : MonoBehaviour
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
+        moveSpeed = PlayerPrefs.GetFloat("MoveSpeed");
+        dashCooldown = PlayerPrefs.GetFloat("DashCooldown");
+        PlayerPrefs.SetFloat("MoveSpeed", moveSpeed);
+        PlayerPrefs.SetFloat("DashCooldown", dashCooldown);
         dashBar.maxValue = dashCooldown;
         dashBar.value = dashBar.maxValue;
         dashBarScale = dashBar.transform.localScale;
@@ -126,6 +130,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        PlayerPrefs.SetFloat("MoveSpeed", moveSpeed);
+        PlayerPrefs.SetFloat("DashCooldown", dashCooldown);
+        Debug.Log($"Move: {moveSpeed}");
+        Debug.Log($"Dash: {dashCooldown}");
         attackTimer += Time.deltaTime;
         isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
         FixHealthBugs();
