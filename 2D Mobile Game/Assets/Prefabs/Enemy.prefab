@@ -147,15 +147,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d6aede96e1d7842a76570234a6edf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyChase: 2
+  enemyChase: 1
   moveSpeed: 5
-  chaseDistance: 10
+  chaseDistance: 15
+  shootDistance: 20
   maxHealth: 50
   enemyAttack: 2
   attackDamageToDeal: 10
   attackDelay: 3
   gunDamageToDeal: 5
-  shootDelay: 2
+  shootDelay: 5
   bulletSpeed: 5
   bulletLifeTime: 3
   scoreToGiveAfterDeath: 20

@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class FinishLevel : MonoBehaviour
 {
-    private GameManager gameManager;
+    [SerializeField] private Canvas winScreen;
+
     private EnemyCounter enemyCounter;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
         enemyCounter = FindObjectOfType<EnemyCounter>();
+    }
+
+    private void Start()
+    {
+        winScreen.enabled = false;
+        Time.timeScale = 1;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && enemyCounter.enemiesRemaining <= 0)
         {
-            gameManager.LoadNextScene();
+            CompleteLevel();
         }
+    }
+
+    public void CompleteLevel()
+    {
+        winScreen.enabled = true;
+        Time.timeScale = 0;
     }
 }

@@ -33,14 +33,14 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
-        //int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        //SceneManager.LoadScene(nextSceneIndex);
-        SceneManager.LoadScene("Raf");
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(nextSceneIndex);
         PlayerPrefs.SetInt("Money", 0);
         PlayerPrefs.SetInt("Dash", 2300);
         PlayerPrefs.SetInt("Reload", 2000);
         PlayerPrefs.SetInt("Shoot", 3000);
         PlayerPrefs.SetInt("Run", 2500);
+        PlayerPrefs.SetFloat("ReloadSpeed", 0.8f);
     }
     public void ChangeDifficulty()
     {
