@@ -183,12 +183,12 @@ public class PlayerStats : MonoBehaviour
 
     private void FastReload()
     {
-        gun.SubtractReloadSpeed(0.025f);
+        gun.SubtractReloadSpeed(0.15f);
     }
 
     private void FastDash()
     {
-        player.SubtractDashInterval(0.025f);
+        player.SubtractDashInterval(0.15f);
     }
 
     private void FastWalk()

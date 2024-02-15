@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyChase enemyChase = EnemyChase.None;
     [Min(0), SerializeField] private float moveSpeed = 1;
     [Min(0), SerializeField] private float chaseDistance = 1;
+    [Min(0), SerializeField] private float shootDistance = 1;
     
     [Header("Health")]
     [Min(0), SerializeField] private int maxHealth = 100;
@@ -65,6 +66,8 @@ public class Enemy : MonoBehaviour
             gunDamageToDeal *= 2;
             attackDamageToDeal *= 2;
             moneyToGiveAfterDeath *= 2;
+            moveSpeed *= 2;
+            shootDelay /= 2;
         }
         else if (PlayerPrefs.GetInt("Difficulty") == 3)
         {
@@ -72,6 +75,8 @@ public class Enemy : MonoBehaviour
             gunDamageToDeal *= 3;
             attackDamageToDeal *= 3;
             moneyToGiveAfterDeath *= 3;
+            moveSpeed *= 3;
+            shootDelay /= 3;
         }
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
@@ -148,7 +153,7 @@ public class Enemy : MonoBehaviour
 
         if (isMoving)
         {
-            transform.localScale = new Vector2(Mathf.Sign(-rb.velocity.x), 1);
+            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1);
         }
     }
     //
@@ -198,11 +203,11 @@ public class Enemy : MonoBehaviour
     {
         float moveMultiplier = 10 * bulletSpeed;
         Vector3 playerPosition = player.transform.position - transform.position;
-        bool playerIsClose = playerPosition.magnitude < chaseDistance;
+        bool playerIsClose = playerPosition.magnitude < shootDistance;
 
-        if (shootTimer >= shootDelay && (enemyChase == EnemyChase.Instantly
-                                         || (enemyChase == EnemyChase.Proximity && playerIsClose)
-                                         || currentHealth < maxHealth))
+        if (shootTimer >= shootDelay
+            && (enemyChase == EnemyChase.Instantly || enemyChase == EnemyChase.Proximity)
+            && playerIsClose)
         {
             playerPosition.Normalize();
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
@@ -232,7 +237,14 @@ public class Enemy : MonoBehaviour
     //Other
     private void OnDrawGizmos()
     {
+        if (enemyChase == EnemyChase.None)
+        {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(transform.position, shootDistance);
         Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        Gizmos.color = Color.red;
     }
 
     private enum EnemyAttack { None, Melee, Shoot }

@@ -50,6 +50,7 @@ public class Gun : MonoBehaviour
         {
             maxAmmo = reserveAmmo;
         }
+        reloadInterval = PlayerPrefs.GetFloat("ReloadSpeed");
         reloadBar.maxValue = reloadInterval;
         reloadBar.value = reloadBar.maxValue;
     }
@@ -59,7 +60,11 @@ public class Gun : MonoBehaviour
         FixAmmoBugs();
         UpdateUI();
 
+        Debug.Log($"Burh: {reloadInterval}");
+
         shootTimer += Time.deltaTime;
+
+        PlayerPrefs.SetFloat("ReloadSpeed", reloadInterval);
 
         if (canShoot)
         {
