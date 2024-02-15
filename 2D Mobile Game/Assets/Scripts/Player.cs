@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     [Min(0), SerializeField] private int maxHealthPacks = 10;
     [Min(0), SerializeField] private float healDelay = 1;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Color32 healthColor;
+    [SerializeField] private Color32 lowHealthColor;
     [SerializeField] private TextMeshProUGUI healthPacksText;
     [SerializeField] private AudioClip healSFX, hurtSFX;
     [SerializeField] private Canvas loseScreen;
@@ -39,7 +41,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip attackSFX;
 
     [Header("Controls")]
-    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] public bool allowKeyControls = true;
+    [Tooltip("Allows the game to be played with keyboard if set to true."), SerializeField] private bool allowKeyControls = true;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Canvas mobileControls;
 
@@ -78,6 +80,10 @@ public class Player : MonoBehaviour
         allowGravity = rb.gravityScale > 0;
         mobileControls.enabled = !allowKeyControls;
         joystick.AxisOptions = allowGravity ? AxisOptions.Horizontal : AxisOptions.Both;
+        moveSpeed = PlayerPrefs.GetFloat("MoveSpeed");
+        dashCooldown = PlayerPrefs.GetFloat("DashCooldown");
+        PlayerPrefs.SetFloat("MoveSpeed", moveSpeed);
+        PlayerPrefs.SetFloat("DashCooldown", dashCooldown);
         dashBar.maxValue = dashCooldown;
         dashBar.value = dashBar.maxValue;
         dashBarScale = dashBar.transform.localScale;
@@ -126,6 +132,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        PlayerPrefs.SetFloat("MoveSpeed", moveSpeed);
+        PlayerPrefs.SetFloat("DashCooldown", dashCooldown);
+        Debug.Log($"Move: {moveSpeed}");
+        Debug.Log($"Dash: {dashCooldown}");
         attackTimer += Time.deltaTime;
         isMoving = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon || Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
         FixHealthBugs();
@@ -334,7 +344,7 @@ public class Player : MonoBehaviour
         dashBar.gameObject.SetActive(!canDash);
         healthBar.value = currentHealth;
         Image healthBarFillArea = GameObject.Find("Fill").GetComponent<Image>();
-        healthBarFillArea.color = currentHealth > 25 ? Color.green : Color.red;
+        healthBarFillArea.color = currentHealth > 25 ? healthColor : lowHealthColor;
     }
 
     public bool AllowsKeyControls()

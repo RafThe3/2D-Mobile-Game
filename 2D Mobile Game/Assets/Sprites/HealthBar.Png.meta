@@ -121,11 +121,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 7
-        y: 392
+        y: 390
         width: 377
         height: 102
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,11 +142,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 7
-        y: 280
+        y: 278
         width: 377
         height: 102
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,11 +163,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 7
-        y: 168
+        y: 166
         width: 377
         height: 102
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,11 +184,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 7
+        y: 5
         width: 382
         height: 151
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,6 +196,27 @@ TextureImporter:
       bones: []
       spriteID: d307b8b70fc7d8840aafa9663d2caa66
       internalID: -1866296926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthBar_4
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 506
+        width: 331
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376d3ccc186166a4eaef7e6ad3d19327
+      internalID: 719254925
       vertices: []
       indices: 
       edges: []
@@ -215,6 +236,10 @@ TextureImporter:
       HealthBar_1: 1892335238
       HealthBar_2: -1283827720
       HealthBar_3: -1866296926
+      HealthBar_4: 719254925
+      HealthBar_5: 1191299371
+      HealthBar_6: -672596133
+      HealthBar_7: 1483304014
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
