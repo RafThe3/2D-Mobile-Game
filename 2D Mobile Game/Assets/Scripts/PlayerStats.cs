@@ -21,7 +21,6 @@ public class PlayerStats : MonoBehaviour
     [Header("Win Screen")]
     [SerializeField] private TextMeshProUGUI wsKillsText;
     [SerializeField] private TextMeshProUGUI wsScoreText;
-    [SerializeField] private TextMeshProUGUI wsMoneyText;
     [SerializeField] private TextMeshProUGUI wsTimeText;
 
     [Header("Merchant UI")]
@@ -91,10 +90,9 @@ public class PlayerStats : MonoBehaviour
             lsMoneyText.text = $"${money}";
             lsTimeText.text = tempTime;
 
-            //wsKillsText.text = $"{kills}";
-            //wsScoreText.text = $"{score}";
-            //wsMoneyText.text = $"${money}";
-            //wsTimeText.text = tempTime;
+            wsKillsText.text = $"{kills}";
+            wsScoreText.text = $"{score}";
+            wsTimeText.text = tempTime;
 
             merchantMoneyText.text = $"${money}";
         }
