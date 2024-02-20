@@ -2672,7 +2672,7 @@ MonoBehaviour:
   damageAmount: 10
   attackPoint: {fileID: 1626052956}
   attackSFX: {fileID: 0}
-  allowKeyControls: 1
+  allowKeyControls: 0
   joystick: {fileID: 686002448}
   mobileControls: {fileID: 218280446}
 --- !u!4 &155142201
