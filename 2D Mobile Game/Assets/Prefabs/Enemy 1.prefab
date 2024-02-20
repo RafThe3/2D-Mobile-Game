@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2839481786963985574}
   - component: {fileID: 2839481786963985561}
   - component: {fileID: 2839481786963985560}
+  - component: {fileID: 7403503614030891879}
   m_Layer: 7
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -164,6 +165,27 @@ MonoBehaviour:
   hurtSFX: {fileID: 0}
   bulletPrefab: {fileID: 8083596436272375505, guid: 9f68792fb88045842805e2d1ab4d8383, type: 3}
   shootSFX: {fileID: 8300000, guid: 5f65f7a864d7742fda4f10edfde922d2, type: 3}
+--- !u!95 &7403503614030891879
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2839481786963985563}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 688c755ba90e86143abe83851f7ef2db, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3057828453310320559
 GameObject:
   m_ObjectHideFlags: 0
